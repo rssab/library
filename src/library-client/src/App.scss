@@ -1,0 +1,24 @@
+
+// UNL Brand Colors
+$scarlett: #d00000;
+$cream: #f5f1e7;
+$light-cream: #fefdfa;
+// Not an official UNL color, pulled from the digital color picker because it looks good :)
+$dark-gray: #40403f;
+$gray: #c7c8ca;
+$cerulean: #249ab5;
+$navy: #001226;
+
+// Overrides to Bootstraps default colors for theming purposes.
+$theme-colors: (
+        "primary": $scarlett,
+        "secondary": $dark-gray,
+        "info": $cream,
+        "warning": $gray,
+        "success": $cerulean,
+        "danger": $navy,
+        "light-cream": $light-cream
+);
+
+// Import Bootstrap with new color defaults defined above
+@import "../node_modules/bootstrap/scss/bootstrap";
