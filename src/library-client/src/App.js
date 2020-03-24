@@ -1,17 +1,21 @@
 import React from "react";
 import "./App.scss";
 import UserContainer from "./containers/UserContainer";
-import { BrowserRouter } from "react-router-dom";
+import Navigation from "./components/navigation/Navigation";
+import { Switch, Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <UserContainer>
-          <p>Hello world!</p>
-        </UserContainer>
-      </div>
-    </BrowserRouter>
+    <div className="App">
+      <UserContainer>
+        <Navigation />
+        <Switch>
+          <Route path="/"></Route>
+          <Route path="/browse"></Route>
+          <Route path="/checkout"></Route>
+        </Switch>
+      </UserContainer>
+    </div>
   );
 };
 

@@ -5,7 +5,7 @@ import API_BASE_URL from "./Globals";
 
 const login = (nuid, pin) => {
   return {
-    user: { nuid: "11111111", firstName: "Karl", lastName: "Shaffer" },
+    user: { nuid: nuid, firstName: "Karl", lastName: "Shaffer" },
     token: "somegarbagethatrepresentsaJWT"
   };
 };
