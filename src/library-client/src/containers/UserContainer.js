@@ -31,7 +31,17 @@ class UserContainer extends Component {
 
   render() {
     return (
-      <UserProvider value={this.state}>{this.props.children}</UserProvider>
+      <UserProvider
+        value={{
+          state: this.state,
+          handleUserLogin: this.handleUserLogin,
+          handleUserLogout: this.handleUserLogout
+        }}
+      >
+        {this.props.children}
+      </UserProvider>
     );
   }
 }
+
+export default UserContainer;

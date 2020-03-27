@@ -1,10 +1,20 @@
 import React from "react";
 import "./App.scss";
+import UserContainer from "./containers/UserContainer";
+import Navigation from "./components/navigation/Navigation";
+import { Switch, Route } from "react-router-dom";
 
 const App = () => {
   return (
     <div className="App">
-      <p>Hello world!</p>
+      <UserContainer>
+        <Navigation />
+        <Switch>
+          <Route path="/"></Route>
+          <Route path="/browse"></Route>
+          <Route path="/checkout"></Route>
+        </Switch>
+      </UserContainer>
     </div>
   );
 };
