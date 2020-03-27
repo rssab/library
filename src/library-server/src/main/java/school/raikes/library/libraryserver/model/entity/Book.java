@@ -34,4 +34,5 @@ public class Book {
   private Date publishDate;
 
   @Column @Lob private String description;
+
 }

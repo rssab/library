@@ -27,4 +27,5 @@ public class Copy {
   @Column private String barcode;
 
   @ManyToOne private Shelf location;
+
 }

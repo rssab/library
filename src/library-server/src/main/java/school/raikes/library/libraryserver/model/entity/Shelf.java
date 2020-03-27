@@ -17,4 +17,5 @@ public class Shelf {
 
   @OneToMany(mappedBy = "location")
   private List<Copy> copies;
+
 }
