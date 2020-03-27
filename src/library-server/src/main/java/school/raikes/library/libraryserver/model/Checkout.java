@@ -24,4 +24,5 @@ public class Checkout {
 
   @Temporal(TemporalType.TIMESTAMP)
   private Date checkinDate;
+
 }

@@ -16,4 +16,5 @@ public class Tag {
 
   @ManyToMany(mappedBy = "tags")
   private List<Book> books;
+
 }
