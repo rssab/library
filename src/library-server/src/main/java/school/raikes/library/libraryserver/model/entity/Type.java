@@ -14,4 +14,5 @@ public class Type {
 
   @Column(length = 64)
   private String name;
+
 }
