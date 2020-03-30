@@ -1,5 +1,7 @@
 package school.raikes.library.libraryserver.engine;
 
+import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -15,9 +17,6 @@ import school.raikes.library.libraryserver.exceptions.WebApplicationException;
 import school.raikes.library.libraryserver.model.entity.LibraryAccount;
 import school.raikes.library.libraryserver.model.entity.Role;
 import school.raikes.library.libraryserver.security.JwtTokenProvider;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 /** Basic implementation of the {@link ILibraryAccountEngine}. */
 @Service
