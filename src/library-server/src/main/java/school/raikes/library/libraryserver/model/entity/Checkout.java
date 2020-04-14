@@ -1,8 +1,9 @@
-package school.raikes.library.libraryserver.model;
+package school.raikes.library.libraryserver.model.entity;
 
-import java.util.Date;
-import javax.persistence.*;
 import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data

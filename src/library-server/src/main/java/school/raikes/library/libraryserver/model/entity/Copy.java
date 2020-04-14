@@ -1,10 +1,11 @@
-package school.raikes.library.libraryserver.model;
+package school.raikes.library.libraryserver.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Date;
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import lombok.Data;
+import java.util.Date;
 
 @Entity
 @Data
