@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc9cb782-0107-4ee4-8e3c-7f260ebe4d85" name="Default Changelist" comment="" />
+    <list default="true" id="cc9cb782-0107-4ee4-8e3c-7f260ebe4d85" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,6 +74,7 @@
       <option name="presentableId" value="Default" />
       <updated>1585073756489</updated>
       <workItem from="1585073759869" duration="5141000" />
+      <workItem from="1586462714422" duration="1197000" />
     </task>
     <task id="LOCAL-00001" summary="Clears out default React boilerplate: &#10;- Removes default react stuff. &#10;- Adds shared IntelliJ configuration to client.">
       <created>1585074393877</created>
