@@ -1,7 +1,5 @@
 package school.raikes.library.libraryserver.engine;
 
-import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -18,7 +16,12 @@ import school.raikes.library.libraryserver.model.entity.LibraryAccount;
 import school.raikes.library.libraryserver.model.entity.Role;
 import school.raikes.library.libraryserver.security.JwtTokenProvider;
 
-/** Basic implementation of the {@link ILibraryAccountEngine}. */
+import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
+
+/**
+ * Basic implementation of the {@link ILibraryAccountEngine}.
+ */
 @Service
 public class LibraryAccountEngine implements ILibraryAccountEngine {
 
@@ -27,10 +30,10 @@ public class LibraryAccountEngine implements ILibraryAccountEngine {
       "User with provided NUID already exists.";
   private static final String NUID_NOT_FOUND_FAILURE_MESSAGE = "NUID not found.";
 
-  private ILibraryAccountAccessor libraryAccountAccessor;
-  private PasswordEncoder passwordEncoder;
-  private JwtTokenProvider jwtTokenProvider;
-  private AuthenticationManager authenticationManager;
+  private final ILibraryAccountAccessor libraryAccountAccessor;
+  private final PasswordEncoder passwordEncoder;
+  private final JwtTokenProvider jwtTokenProvider;
+  private final AuthenticationManager authenticationManager;
 
   @Autowired
   public LibraryAccountEngine(

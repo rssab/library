@@ -4,11 +4,13 @@ import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.IRoleAccessor;
 import school.raikes.library.libraryserver.model.entity.Role;
 
-/** Basic implementation of the {@link IRoleEngine}. */
+/**
+ * Basic implementation of the {@link IRoleEngine}.
+ */
 @Service
 public class RoleEngine implements IRoleEngine {
 
-  private IRoleAccessor roleAccessor;
+  private final IRoleAccessor roleAccessor;
 
   public RoleEngine(IRoleAccessor roleAccessor) {
     this.roleAccessor = roleAccessor;

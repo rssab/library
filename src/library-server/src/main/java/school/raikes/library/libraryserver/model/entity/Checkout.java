@@ -1,8 +1,9 @@
 package school.raikes.library.libraryserver.model.entity;
 
-import java.util.Date;
-import javax.persistence.*;
 import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -11,9 +12,11 @@ public class Checkout {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne private Copy copy;
+  @ManyToOne
+  private Copy copy;
 
-  @ManyToOne private LibraryAccount recipient;
+  @ManyToOne
+  private LibraryAccount recipient;
 
   @Temporal(TemporalType.TIMESTAMP)
   private Date checkoutDate;

@@ -1,9 +1,10 @@
 package school.raikes.library.libraryserver.engine;
 
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import school.raikes.library.libraryserver.model.entity.LibraryAccount;
 import school.raikes.library.libraryserver.model.entity.Role;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Engine interface for managing {@link LibraryAccount}s. Extends the {@link UserDetailsService} so

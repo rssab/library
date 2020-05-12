@@ -1,10 +1,11 @@
 package school.raikes.library.libraryserver.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Date;
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import lombok.Data;
+import java.util.Date;
 
 @Entity
 @Data
@@ -22,7 +23,9 @@ public class Copy {
   @Temporal(TemporalType.DATE)
   private Date acquisitionDate;
 
-  @Column private String barcode;
+  @Column
+  private String barcode;
 
-  @ManyToOne private Shelf location;
+  @ManyToOne
+  private Shelf location;
 }

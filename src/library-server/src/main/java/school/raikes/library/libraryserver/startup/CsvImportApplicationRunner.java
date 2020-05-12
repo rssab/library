@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import school.raikes.library.libraryserver.loaders.CatalogCsvLoader;
-import school.raikes.library.libraryserver.readers.CatalogCsvReader;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,33 +17,33 @@ import java.io.IOException;
 @Slf4j
 public class CsvImportApplicationRunner implements ApplicationRunner {
 
-    private static final String CSV_FILE_PARAMETER = "importcsvfile";
+  private static final String CSV_FILE_PARAMETER = "importcsvfile";
 
-    private CatalogCsvLoader catalogCsvLoader;
+  private final CatalogCsvLoader catalogCsvLoader;
 
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-        log.info("Checking for CSV catalog to import");
-        if (args.containsOption(CSV_FILE_PARAMETER)) {
-            String filepath = args.getOptionValues(CSV_FILE_PARAMETER).get(0);
-            log.info("Loading CSV file: {}", filepath);
+  @Autowired
+  public CsvImportApplicationRunner(@Lazy CatalogCsvLoader catalogCsvLoader) {
+    this.catalogCsvLoader = catalogCsvLoader;
+  }
 
-            File catalogFile = new File(filepath);
+  @Override
+  public void run(ApplicationArguments args) throws Exception {
+    log.info("Checking for CSV catalog to import");
+    if (args.containsOption(CSV_FILE_PARAMETER)) {
+      String filepath = args.getOptionValues(CSV_FILE_PARAMETER).get(0);
+      log.info("Loading CSV file: {}", filepath);
 
-//            try {
-//
-//            } catch(IOException ioe) {
-//                log.warn("Error occurred while attempting to import CSV file {}", catalogFile);
-//                log.debug("Exception thrown: ", ioe);
-//            }
+      File catalogFile = new File(filepath);
 
-        } else {
-            log.info("No import required");
-        }
+      try {
+        catalogCsvLoader.load(catalogFile);
+      } catch (IOException ioe) {
+        log.warn("Error occurred while attempting to import CSV file {}", catalogFile);
+        log.debug("Exception thrown: ", ioe);
+      }
+
+    } else {
+      log.info("No import required");
     }
-
-    @Autowired
-    public void setCatalogCsvLoader(CatalogCsvLoader loader) {
-        this.catalogCsvLoader = catalogCsvLoader;
-    }
+  }
 }
