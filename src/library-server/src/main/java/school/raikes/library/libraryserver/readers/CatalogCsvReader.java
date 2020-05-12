@@ -5,11 +5,13 @@ import com.google.common.collect.ImmutableSet;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.stereotype.Component;
 import school.raikes.library.libraryserver.model.entity.*;
 
 import java.io.*;
 import java.util.*;
 
+@Component
 public class CatalogCsvReader {
 
     public static final Set<String> EMPTY_VALUES = ImmutableSet.of("", "-", "undefined");
