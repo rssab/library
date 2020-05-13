@@ -1,5 +1,6 @@
 package school.raikes.library.libraryserver.readers;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
@@ -20,6 +21,7 @@ import java.util.*;
 @Builder
 public class CatalogCsvReader {
 
+  public static final int LONG_NAME_DETERMINANT = 6;
   public static final Set<String> EMPTY_VALUES = ImmutableSet.of("", "-", "undefined");
   public static final String DATE_FORMAT = "MM/dd/yyyy";
   public static final String MANUAL_TAG_NAME = "MANUAL";
@@ -82,6 +84,13 @@ public class CatalogCsvReader {
         throw new ParseException("Failed to parse Barcode", (int) parser.getCurrentLineNumber());
       }
 
+      String parsedIsbn;
+      if (!EMPTY_VALUES.contains(isbn)) {
+        parsedIsbn = isbn;
+      } else {
+        parsedIsbn = null;
+      }
+
       String parsedSubtitle;
       if (!EMPTY_VALUES.contains(subtitle)) {
         parsedSubtitle = subtitle;
@@ -103,13 +112,24 @@ public class CatalogCsvReader {
       List<String[]> parsedAuthors = new LinkedList<>();
       try {
         // Split in case of multiple authors and attempt to parse each name individually.
-        for (String author : Splitter.on(",").split(authors)) {
-          HumanNameParserParser nameParser = new HumanNameParserParser(author);
-          parsedAuthors.add(new String[]{nameParser.getFirst(), nameParser.getMiddle(), nameParser.getLast()});
+        for (String author : Splitter.on(",").trimResults().split(authors)) {
+
+          // If just last names or organization (long) names just add and continue.
+          long nameLength = Splitter.on(CharMatcher.whitespace()).splitToStream(author).count();
+          if (nameLength == 1 || nameLength > LONG_NAME_DETERMINANT) {
+            parsedAuthors.add(new String[]{null,null,author});
+            continue;
+          }
+
+          HumanNameParserParser nameParser = new HumanNameParserParser(author.trim());
+          parsedAuthors.add(new String[]{
+              nameParser.getFirst().isEmpty() ? null : nameParser.getFirst(),
+              nameParser.getMiddle().isEmpty() ? null : nameParser.getMiddle(),
+              nameParser.getLast().isEmpty() ? null : nameParser.getLast()});
         }
       } catch (com.tupilabs.human_name_parser.ParseException pe) {
         // If unable to parse, assume organization and set full author string to last name.
-        parsedAuthors.add(new String[]{"","",authors});
+        parsedAuthors.add(new String[]{null,null,authors});
       }
 
       Date parsedPublishDate;
@@ -190,7 +210,7 @@ public class CatalogCsvReader {
       if (b == null) {
         b = new Book();
 
-        b.setIsbn(isbn);
+        b.setIsbn(parsedIsbn);
         b.setTitle(title);
         b.setSubtitle(parsedSubtitle);
         b.setEdition(parsedEdition);
@@ -199,7 +219,8 @@ public class CatalogCsvReader {
         b.setAuthors(authorEntities);
         b.setPublishDate(parsedPublishDate);
 
-        isbnBookMap.put(isbn, b);
+        // If the entry does not have an ISBN put it in the map with a UUID so it is still stored in the map.
+        isbnBookMap.put(parsedIsbn == null ? UUID.randomUUID().toString() : isbn, b);
       }
 
       c.setBook(b);

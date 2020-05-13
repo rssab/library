@@ -27,7 +27,7 @@ public class Book {
   private String subtitle;
 
   @Column
-  private int edition;
+  private Integer edition;
 
   @Column
   @Lob

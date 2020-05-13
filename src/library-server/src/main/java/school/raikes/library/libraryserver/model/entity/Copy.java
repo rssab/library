@@ -24,7 +24,7 @@ public class Copy {
   private Date acquisitionDate;
 
   @Column
-  private long barcode;
+  private Long barcode;
 
   @ManyToOne
   private Shelf location;
