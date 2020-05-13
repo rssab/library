@@ -15,5 +15,7 @@ public interface IAuthorEngine {
 
   Author save(Author author);
 
+  Iterable<Author> saveAll(Iterable<Author> authors);
+
   void delete(Author author);
 }

@@ -51,8 +51,12 @@ public class CatalogCsvLoader {
   }
 
   public void load(InputStream inputStream) throws IOException, ParseException {
-    Collection<Book> books = this.catalogCsvReader.read(inputStream).getBooks();
-    bookEngine.saveAll(books);
+    this.catalogCsvReader.read(inputStream);
+
+    this.tagEngine.saveAll(this.catalogCsvReader.getTags());
+    this.authorEngine.saveAll(this.catalogCsvReader.getAuthors());
+    this.shelfEngine.saveAll(this.catalogCsvReader.getShelves());
+    this.bookEngine.saveAll(this.catalogCsvReader.getBooks());
   }
 
 }

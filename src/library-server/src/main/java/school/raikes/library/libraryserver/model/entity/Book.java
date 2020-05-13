@@ -17,7 +17,7 @@ public class Book {
   @Column(length = 64)
   private String isbn;
 
-  @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "book", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<Copy> copies;
 
   @Column

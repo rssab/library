@@ -40,6 +40,11 @@ public class AuthorEngine implements IAuthorEngine {
   }
 
   @Override
+  public Iterable<Author> saveAll(Iterable<Author> authors) {
+    return this.authorAccessor.saveAll(authors);
+  }
+
+  @Override
   public void delete(Author author) {
     this.authorAccessor.delete(author);
   }
