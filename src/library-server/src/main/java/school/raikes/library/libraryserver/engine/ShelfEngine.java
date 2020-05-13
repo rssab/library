@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.IShelfAccessor;
 import school.raikes.library.libraryserver.model.entity.Shelf;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -25,6 +27,15 @@ public class ShelfEngine implements IShelfEngine {
   @Override
   public Optional<Shelf> findByNumber(int number) {
     return this.shelfAccessor.findByNumber(number);
+  }
+
+  @Override
+  public Map<Integer, Shelf> loadNumberShelfMap() {
+    Map<Integer, Shelf> shelfMap = new HashMap<>();
+
+    findAll().forEach((s) -> shelfMap.put(s.getNumber(), s));
+
+    return shelfMap;
   }
 
   @Override

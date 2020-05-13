@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.ITagAccessor;
 import school.raikes.library.libraryserver.model.entity.Tag;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -27,6 +29,15 @@ public class TagEngine implements ITagEngine {
   @Override
   public Optional<Tag> findByName(String name) {
     return this.tagAccessor.findByName(name);
+  }
+
+  @Override
+  public Map<String, Tag> loadNameTagMap() {
+    Map<String, Tag> tagMap = new HashMap<>();
+
+    findAll().forEach((t) -> tagMap.put(t.getName(), t));
+
+    return tagMap;
   }
 
   @Override

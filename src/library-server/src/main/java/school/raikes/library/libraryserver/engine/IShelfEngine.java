@@ -2,6 +2,7 @@ package school.raikes.library.libraryserver.engine;
 
 import school.raikes.library.libraryserver.model.entity.Shelf;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -11,6 +12,8 @@ public interface IShelfEngine {
   Iterable<Shelf> findAll();
 
   Optional<Shelf> findByNumber(int number);
+
+  Map<Integer, Shelf> loadNumberShelfMap();
 
   Shelf save(Shelf shelf);
 

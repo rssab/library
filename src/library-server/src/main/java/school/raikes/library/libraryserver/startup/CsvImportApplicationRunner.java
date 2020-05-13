@@ -37,9 +37,9 @@ public class CsvImportApplicationRunner implements ApplicationRunner {
 
       try {
         catalogCsvLoader.load(catalogFile);
-      } catch (IOException ioe) {
+      } catch (Exception e) {
         log.warn("Error occurred while attempting to import CSV file {}", catalogFile);
-        log.debug("Exception thrown: ", ioe);
+        log.warn("Exception thrown: ", e);
       }
 
     } else {

@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.IAuthorAccessor;
 import school.raikes.library.libraryserver.model.entity.Author;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Basic implementation of the {@link IAuthorEngine} interface.
  */
@@ -20,6 +23,15 @@ public class AuthorEngine implements IAuthorEngine {
   @Override
   public Iterable<Author> findAll() {
     return this.authorAccessor.findAll();
+  }
+
+  @Override
+  public Map<String, Author> loadNameAuthorMap() {
+    Map<String, Author> authorMap = new HashMap<>();
+
+    findAll().forEach((a) -> authorMap.put(a.getFirstName() + a.getMiddleName() + a.getLastName(), a));
+
+    return authorMap;
   }
 
   @Override

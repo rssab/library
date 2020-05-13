@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.IBookAccessor;
 import school.raikes.library.libraryserver.model.entity.Book;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -25,6 +27,15 @@ public class BookEngine implements IBookEngine {
   @Override
   public Optional<Book> findByIsbn(String isbn) {
     return this.bookAccessor.findByIsbn(isbn);
+  }
+
+  @Override
+  public Map<String, Book> loadIsbnBookMap() {
+    Map<String, Book> bookMap = new HashMap<>();
+
+    findAll().forEach((b) -> bookMap.put(b.getIsbn(), b));
+    
+    return bookMap;
   }
 
   @Override
