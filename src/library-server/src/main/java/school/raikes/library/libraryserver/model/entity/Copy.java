@@ -1,11 +1,11 @@
 package school.raikes.library.libraryserver.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -18,14 +18,13 @@ public class Copy {
   @ManyToOne
   @JoinColumn(name = "book_id")
   @JsonIgnore
+  @ToString.Exclude
   private Book book;
 
   @Temporal(TemporalType.DATE)
   private Date acquisitionDate;
 
-  @Column
-  private Long barcode;
+  @Column private Long barcode;
 
-  @ManyToOne
-  private Shelf location;
+  @ManyToOne private Shelf location;
 }

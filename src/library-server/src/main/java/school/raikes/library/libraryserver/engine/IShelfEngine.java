@@ -1,13 +1,10 @@
 package school.raikes.library.libraryserver.engine;
 
-import school.raikes.library.libraryserver.model.entity.Shelf;
-
 import java.util.Map;
 import java.util.Optional;
+import school.raikes.library.libraryserver.model.entity.Shelf;
 
-/**
- * Engine interface for managing {@link Shelf}s
- */
+/** Engine interface for managing {@link Shelf}s */
 public interface IShelfEngine {
   Iterable<Shelf> findAll();
 

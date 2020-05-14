@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 import school.raikes.library.libraryserver.model.entity.Book;
 import school.raikes.library.libraryserver.model.entity.Copy;
 
-/**
- * Accessor interface for {@link Copy}s
- */
+/** Accessor interface for {@link Copy}s */
 @Repository
 public interface ICopyAccessor extends CrudRepository<Copy, Long> {
   Iterable<Copy> findAllByBook(Book book);

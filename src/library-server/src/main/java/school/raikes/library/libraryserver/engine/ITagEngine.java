@@ -1,13 +1,10 @@
 package school.raikes.library.libraryserver.engine;
 
-import school.raikes.library.libraryserver.model.entity.Tag;
-
 import java.util.Map;
 import java.util.Optional;
+import school.raikes.library.libraryserver.model.entity.Tag;
 
-/**
- * Engine interface for managing {@link Tag}s
- */
+/** Engine interface for managing {@link Tag}s */
 public interface ITagEngine {
   Iterable<Tag> findAll();
 

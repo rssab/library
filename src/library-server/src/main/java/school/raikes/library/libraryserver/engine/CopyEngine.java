@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.ICopyAccessor;
 import school.raikes.library.libraryserver.model.entity.Copy;
 
-/**
- * Basic implementation of the {@link ICopyEngine} interface.
- */
+/** Basic implementation of the {@link ICopyEngine} interface. */
 @Service
 public class CopyEngine implements ICopyEngine {
   private final ICopyAccessor copyAccessor;

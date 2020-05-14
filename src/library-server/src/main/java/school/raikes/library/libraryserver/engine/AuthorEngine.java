@@ -1,16 +1,13 @@
 package school.raikes.library.libraryserver.engine;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.IAuthorAccessor;
 import school.raikes.library.libraryserver.model.entity.Author;
 
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * Basic implementation of the {@link IAuthorEngine} interface.
- */
+/** Basic implementation of the {@link IAuthorEngine} interface. */
 @Service
 public class AuthorEngine implements IAuthorEngine {
   private final IAuthorAccessor authorAccessor;
@@ -29,7 +26,8 @@ public class AuthorEngine implements IAuthorEngine {
   public Map<String, Author> loadNameAuthorMap() {
     Map<String, Author> authorMap = new HashMap<>();
 
-    findAll().forEach((a) -> authorMap.put(a.getFirstName() + a.getMiddleName() + a.getLastName(), a));
+    findAll()
+        .forEach((a) -> authorMap.put(a.getFirstName() + a.getMiddleName() + a.getLastName(), a));
 
     return authorMap;
   }

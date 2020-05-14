@@ -1,16 +1,13 @@
 package school.raikes.library.libraryserver.engine;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.IShelfAccessor;
 import school.raikes.library.libraryserver.model.entity.Shelf;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-/**
- * Basic implementation of the {@link IShelfEngine} interface.
- */
+/** Basic implementation of the {@link IShelfEngine} interface. */
 @Service
 public class ShelfEngine implements IShelfEngine {
   private final IShelfAccessor shelfAccessor;

@@ -1,13 +1,10 @@
 package school.raikes.library.libraryserver.engine;
 
-import school.raikes.library.libraryserver.model.entity.Book;
-
 import java.util.Map;
 import java.util.Optional;
+import school.raikes.library.libraryserver.model.entity.Book;
 
-/**
- * Engine interface for managing {@link Book}s.
- */
+/** Engine interface for managing {@link Book}s. */
 public interface IBookEngine {
   Iterable<Book> findAll();
 

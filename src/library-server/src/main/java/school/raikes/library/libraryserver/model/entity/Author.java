@@ -1,8 +1,7 @@
 package school.raikes.library.libraryserver.model.entity;
 
-import lombok.Data;
-
 import javax.persistence.*;
+import lombok.Data;
 
 @Entity
 @Data
@@ -11,12 +10,9 @@ public class Author {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
-  private String firstName;
+  @Column private String firstName;
 
-  @Column
-  private String middleName;
+  @Column private String middleName;
 
-  @Column
-  private String lastName;
+  @Column private String lastName;
 }

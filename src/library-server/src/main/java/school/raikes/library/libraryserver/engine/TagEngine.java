@@ -1,17 +1,14 @@
 package school.raikes.library.libraryserver.engine;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.ITagAccessor;
 import school.raikes.library.libraryserver.model.entity.Tag;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-/**
- * Basic implementation of the {@link ITagEngine} interface.
- */
+/** Basic implementation of the {@link ITagEngine} interface. */
 @Service
 public class TagEngine implements ITagEngine {
   private final ITagAccessor tagAccessor;

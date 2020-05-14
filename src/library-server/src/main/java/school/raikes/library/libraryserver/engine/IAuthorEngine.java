@@ -1,13 +1,9 @@
 package school.raikes.library.libraryserver.engine;
 
-
+import java.util.Map;
 import school.raikes.library.libraryserver.model.entity.Author;
 
-import java.util.Map;
-
-/**
- * Engine interface for managing {@link Author}s.
- */
+/** Engine interface for managing {@link Author}s. */
 public interface IAuthorEngine {
   Iterable<Author> findAll();
 

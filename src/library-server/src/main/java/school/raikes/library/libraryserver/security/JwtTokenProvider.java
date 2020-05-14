@@ -4,6 +4,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Base64;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -17,13 +23,6 @@ import school.raikes.library.libraryserver.exceptions.WebApplicationException;
 import school.raikes.library.libraryserver.model.entity.LibraryAccount;
 import school.raikes.library.libraryserver.model.entity.Role;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Provider of JWT authorization tokens that manages, issues, and validates JWTs sent to the system.
  */
@@ -34,8 +33,10 @@ public class JwtTokenProvider {
   public static final String INVALID_JWT_MESSAGE = "Expired or Invalid JWT token.";
   public static final String CLAIMS_ROLE_KEY = "auth";
   private final ILibraryAccountEngine libraryAccountEngine;
+
   @Value("${security.jwt.token.secret-key:secret-key}")
   private String secretKey;
+
   @Value("${security.jwt/token.expire-length:3600000}")
   private long validityInMilliseconds;
 

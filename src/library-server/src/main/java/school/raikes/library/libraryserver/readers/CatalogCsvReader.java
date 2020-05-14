@@ -5,18 +5,17 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 import com.tupilabs.human_name_parser.HumanNameParserParser;
-import lombok.Builder;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-import school.raikes.library.libraryserver.model.entity.*;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import lombok.Builder;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import school.raikes.library.libraryserver.model.entity.*;
 
 @Builder
 public class CatalogCsvReader {
@@ -40,17 +39,13 @@ public class CatalogCsvReader {
 
   /* Maps used to track existing items so that new copies are properly linked to their respective book, author, etc */
 
-  @Builder.Default
-  private final Map<Integer, Shelf> shelfMap = new HashMap<>();
+  @Builder.Default private final Map<Integer, Shelf> shelfMap = new HashMap<>();
 
-  @Builder.Default
-  private final Map<String, Tag> tagMap = new HashMap<>();
+  @Builder.Default private final Map<String, Tag> tagMap = new HashMap<>();
 
-  @Builder.Default
-  private final Map<String, Author> authorMap = new HashMap<>();
+  @Builder.Default private final Map<String, Author> authorMap = new HashMap<>();
 
-  @Builder.Default
-  private final Map<String, Book> isbnBookMap = new HashMap<>();
+  @Builder.Default private final Map<String, Book> isbnBookMap = new HashMap<>();
 
   /**
    * Reads a Catalog from a CSV input.
@@ -59,7 +54,8 @@ public class CatalogCsvReader {
    * @throws IOException if any errors occur while parsing the CSV.
    */
   public CatalogCsvReader read(InputStream inputStream) throws IOException, ParseException {
-    CSVParser parser = CSVParser.parse(inputStream, Charsets.UTF_8, CSVFormat.EXCEL.withFirstRecordAsHeader());
+    CSVParser parser =
+        CSVParser.parse(inputStream, Charsets.UTF_8, CSVFormat.EXCEL.withFirstRecordAsHeader());
 
     DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
@@ -75,7 +71,7 @@ public class CatalogCsvReader {
       String shelf = row.get(SHELF_KEY).trim();
       String manual = row.get(MANUAL_KEY).trim();
 
-      Long parsedBarcode;
+      long parsedBarcode;
       try {
         // Assume Code 3 of 9 barcode, trim check digit and parse into value.
         parsedBarcode = Long.parseLong(barcode.substring(0, barcode.length() - 1));
@@ -117,19 +113,21 @@ public class CatalogCsvReader {
           // If just last names or organization (long) names just add and continue.
           long nameLength = Splitter.on(CharMatcher.whitespace()).splitToStream(author).count();
           if (nameLength == 1 || nameLength > LONG_NAME_DETERMINANT) {
-            parsedAuthors.add(new String[]{null,null,author});
+            parsedAuthors.add(new String[] {null, null, author});
             continue;
           }
 
           HumanNameParserParser nameParser = new HumanNameParserParser(author.trim());
-          parsedAuthors.add(new String[]{
-              nameParser.getFirst().isEmpty() ? null : nameParser.getFirst(),
-              nameParser.getMiddle().isEmpty() ? null : nameParser.getMiddle(),
-              nameParser.getLast().isEmpty() ? null : nameParser.getLast()});
+          parsedAuthors.add(
+              new String[] {
+                nameParser.getFirst().isEmpty() ? null : nameParser.getFirst(),
+                nameParser.getMiddle().isEmpty() ? null : nameParser.getMiddle(),
+                nameParser.getLast().isEmpty() ? null : nameParser.getLast()
+              });
         }
       } catch (com.tupilabs.human_name_parser.ParseException pe) {
         // If unable to parse, assume organization and set full author string to last name.
-        parsedAuthors.add(new String[]{null,null,authors});
+        parsedAuthors.add(new String[] {null, null, authors});
       }
 
       Date parsedPublishDate;
@@ -137,7 +135,8 @@ public class CatalogCsvReader {
         try {
           parsedPublishDate = dateFormat.parse(publishDate);
         } catch (ParseException pe) {
-          throw new ParseException("Failed to parse Publish Date", (int) parser.getCurrentLineNumber());
+          throw new ParseException(
+              "Failed to parse Publish Date", (int) parser.getCurrentLineNumber());
         }
       } else {
         parsedPublishDate = null;
@@ -148,7 +147,8 @@ public class CatalogCsvReader {
         try {
           parsedAcquisitionDate = dateFormat.parse(acquisitionDate);
         } catch (ParseException pe) {
-          throw new ParseException("Failed to parse Acquisition Date", (int) parser.getCurrentLineNumber());
+          throw new ParseException(
+              "Failed to parse Acquisition Date", (int) parser.getCurrentLineNumber());
         }
       } else {
         parsedAcquisitionDate = null;
@@ -165,7 +165,7 @@ public class CatalogCsvReader {
         parsedShelf = null;
       }
 
-      Boolean parsedManual;
+      boolean parsedManual;
       if (!EMPTY_VALUES.contains(manual)) {
         parsedManual = Boolean.parseBoolean(manual);
       } else {
@@ -175,7 +175,7 @@ public class CatalogCsvReader {
       // Using parsed values, create or update the requisite entities
       List<Author> authorEntities = new ArrayList<>();
       for (String[] author : parsedAuthors) {
-        String authorKey = String.join("",author);
+        String authorKey = String.join("", author);
         Author a = authorMap.get(authorKey);
         if (a == null) {
           a = new Author();
@@ -219,16 +219,17 @@ public class CatalogCsvReader {
         b.setAuthors(authorEntities);
         b.setPublishDate(parsedPublishDate);
 
-        // If the entry does not have an ISBN put it in the map with a UUID so it is still stored in the map.
+        if (parsedManual) {
+          b.getTags().add(manualTag);
+        }
+
+        // If the entry does not have an ISBN put it in the map with a UUID so it is still stored in
+        // the map.
         isbnBookMap.put(parsedIsbn == null ? UUID.randomUUID().toString() : isbn, b);
       }
 
       c.setBook(b);
       b.getCopies().add(c);
-
-      if (parsedManual) {
-        b.getTags().add(manualTag);
-      }
     }
 
     return this;
@@ -242,10 +243,11 @@ public class CatalogCsvReader {
     return authorMap.values();
   }
 
-  public Collection<Shelf> getShelves() { return shelfMap.values(); }
+  public Collection<Shelf> getShelves() {
+    return shelfMap.values();
+  }
 
   public Collection<Tag> getTags() {
     return tagMap.values();
   }
-
 }

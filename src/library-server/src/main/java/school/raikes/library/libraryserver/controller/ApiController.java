@@ -8,5 +8,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * React app through the monstrosity that is a Spring Boot JAR.
  */
 @RequestMapping(path = "/api")
-public class ApiController {
-}
+public class ApiController {}

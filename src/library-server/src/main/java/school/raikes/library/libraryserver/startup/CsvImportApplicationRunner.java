@@ -1,5 +1,6 @@
 package school.raikes.library.libraryserver.startup;
 
+import java.io.File;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -8,9 +9,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import school.raikes.library.libraryserver.loaders.CatalogCsvLoader;
-
-import java.io.File;
-import java.io.IOException;
 
 @Component
 @Profile("dev")
@@ -27,7 +25,7 @@ public class CsvImportApplicationRunner implements ApplicationRunner {
   }
 
   @Override
-  public void run(ApplicationArguments args) throws Exception {
+  public void run(ApplicationArguments args) {
     log.info("Checking for CSV catalog to import");
     if (args.containsOption(CSV_FILE_PARAMETER)) {
       String filepath = args.getOptionValues(CSV_FILE_PARAMETER).get(0);
@@ -39,7 +37,7 @@ public class CsvImportApplicationRunner implements ApplicationRunner {
         catalogCsvLoader.load(catalogFile);
       } catch (Exception e) {
         log.warn("Error occurred while attempting to import CSV file {}", catalogFile);
-        log.warn("Exception thrown: ", e);
+        log.debug("Exception thrown: ", e);
       }
 
     } else {

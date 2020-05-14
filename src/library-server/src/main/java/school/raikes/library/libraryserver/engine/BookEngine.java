@@ -1,16 +1,13 @@
 package school.raikes.library.libraryserver.engine;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.IBookAccessor;
 import school.raikes.library.libraryserver.model.entity.Book;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-/**
- * Basic implementation of the {@link IBookEngine} interface.
- */
+/** Basic implementation of the {@link IBookEngine} interface. */
 @Service
 public class BookEngine implements IBookEngine {
   private final IBookAccessor bookAccessor;
@@ -34,7 +31,7 @@ public class BookEngine implements IBookEngine {
     Map<String, Book> bookMap = new HashMap<>();
 
     findAll().forEach((b) -> bookMap.put(b.getIsbn(), b));
-    
+
     return bookMap;
   }
 

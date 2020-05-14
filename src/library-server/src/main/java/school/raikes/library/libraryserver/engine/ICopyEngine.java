@@ -2,9 +2,7 @@ package school.raikes.library.libraryserver.engine;
 
 import school.raikes.library.libraryserver.model.entity.Copy;
 
-/**
- * Engine interface for managing {@link Copy}s
- */
+/** Engine interface for managing {@link Copy}s */
 public interface ICopyEngine {
   Iterable<Copy> findAll();
 
