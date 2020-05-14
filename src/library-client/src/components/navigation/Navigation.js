@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import {
   Navbar,
-  NavbarBrand,
   NavbarToggler,
   Collapse,
   Nav,

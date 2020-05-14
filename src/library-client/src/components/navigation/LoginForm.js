@@ -15,22 +15,17 @@ const LoginForm = props => {
   const [nuidValidationError, setNuidValidationError] = React.useState(false);
   const [pinValidationError, setPinValidationError] = React.useState(false);
 
-  const nuid = React.createRef();
-  const pin = React.createRef();
+  const [nuid, setNuid] = React.useState();
+  const [pin, setPin] = React.useState();
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    let nuidContent = nuid.current.value;
-    let pinContent = pin.current.value;
-
-    console.log(`NUID: ${nuidContent} PIN: ${pinContent}`);
-
-    const validNuid = validateNuid(nuidContent);
-    const validPin = validatePin(pinContent);
+    const validNuid = validateNuid(nuid);
+    const validPin = validatePin(pin);
 
     if (validPin && validNuid) {
-      props.loginCallback(nuidContent, pinContent);
+      props.loginCallback(nuid, pin);
     } else {
       setNuidValidationError(!validNuid);
       setPinValidationError(!validPin);
@@ -56,7 +51,9 @@ const LoginForm = props => {
             type="text"
             name="nuid"
             id="nuid"
-            innerRef={nuid}
+            onChange={e => {
+              setNuid(e.target.value);
+            }}
             invalid={nuidValidationError}
           />
           <FormFeedback>
@@ -69,7 +66,9 @@ const LoginForm = props => {
             type="password"
             name="pin"
             id="pin"
-            innerRef={pin}
+            onChange={e => {
+              setPin(e.target.value);
+            }}
             invalid={pinValidationError}
           />
           <FormFeedback>

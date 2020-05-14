@@ -1,4 +1,3 @@
-
 // UNL Brand Colors
 $scarlett: #d00000;
 $cream: #f5f1e7;
@@ -11,13 +10,13 @@ $navy: #001226;
 
 // Overrides to Bootstraps default colors for theming purposes.
 $theme-colors: (
-        "primary": $scarlett,
-        "secondary": $dark-gray,
-        "info": $cream,
-        "warning": $gray,
-        "success": $cerulean,
-        "danger": $navy,
-        "light-cream": $light-cream
+  "primary": $scarlett,
+  "secondary": $dark-gray,
+  "info": $cream,
+  "warning": $gray,
+  "success": $cerulean,
+  "danger": $navy,
+  "light-cream": $light-cream
 );
 
 // Import Bootstrap with new color defaults defined above
