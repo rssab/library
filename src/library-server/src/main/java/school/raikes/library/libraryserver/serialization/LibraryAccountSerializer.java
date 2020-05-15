@@ -3,10 +3,9 @@ package school.raikes.library.libraryserver.serialization;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import java.io.IOException;
 import org.springframework.boot.jackson.JsonComponent;
 import school.raikes.library.libraryserver.model.entity.LibraryAccount;
-
-import java.io.IOException;
 
 /**
  * Custom serializer for {@link LibraryAccount} objects to ensure that encrypted passwords are not
@@ -14,7 +13,6 @@ import java.io.IOException;
  */
 @JsonComponent
 public class LibraryAccountSerializer extends JsonSerializer<LibraryAccount> {
-
   public static final String ID_FIELD_KEY = "id";
   public static final String NUID_FIELD_KEY = "nuid";
   public static final String FIRST_NAME_FIELD_KEY = "firstName";

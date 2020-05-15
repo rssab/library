@@ -1,16 +1,14 @@
 package school.raikes.library.libraryserver.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import lombok.Data;
 
 @Entity
 @Data
 public class Copy {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -27,5 +25,4 @@ public class Copy {
   @Column private String barcode;
 
   @ManyToOne private Shelf location;
-
 }

@@ -1,21 +1,19 @@
 package school.raikes.library.libraryserver.model.entity;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
 @Data
 public class LibraryAccount implements UserDetails {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -71,5 +69,4 @@ public class LibraryAccount implements UserDetails {
   public boolean isEnabled() {
     return true;
   }
-
 }

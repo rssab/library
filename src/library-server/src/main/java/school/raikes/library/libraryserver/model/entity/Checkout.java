@@ -1,14 +1,12 @@
 package school.raikes.library.libraryserver.model.entity;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.util.Date;
+import javax.persistence.*;
+import lombok.Data;
 
 @Entity
 @Data
 public class Checkout {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -25,5 +23,4 @@ public class Checkout {
 
   @Temporal(TemporalType.TIMESTAMP)
   private Date checkinDate;
-
 }
