@@ -22,7 +22,7 @@ import school.raikes.library.libraryserver.security.JwtTokenProvider;
 @Service
 public class LibraryAccountEngine implements ILibraryAccountEngine {
 
-  public static final String AUTH_FAILURE_MESSAGE = "Invalid username or password.";
+  public static final String AUTH_FAILURE_MESSAGE = "Invalid NUID or PIN.";
   private static final String EXISTING_USER_FAILURE_MESSAGE =
       "User with provided NUID already exists.";
   private static final String NUID_NOT_FOUND_FAILURE_MESSAGE = "NUID not found.";
