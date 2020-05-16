@@ -1,0 +1,18 @@
+name: Lint/Build for library-server
+on: push
+jobs: 
+  build: 
+    strategy:
+    runs-on: ubuntu-latest
+    steps: 
+    - uses: actions/checkout@v2
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Move to Server Directory.
+      run: cd src/library-server/
+    - name: Make Gradle Executable.
+      run: chmod +x gradlew
+    - name: Build with Gradle.
+      run: ./gradlew build
