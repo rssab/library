@@ -12,4 +12,5 @@ jobs:
     - name: Make Gradle Executable.
       run: chmod +x src/library-server/gradlew
     - name: Build with Gradle.
-      run: src/library-server/gradlew build
+      run: ./gradlew build
+      working-directory: ./src/library-server/
