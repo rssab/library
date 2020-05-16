@@ -3,6 +3,10 @@ on: [push, pull_request]
 jobs: 
   build: 
     runs-on: ubuntu-latest
+
+    env:
+      project-directory: ./src/library-server/
+
     steps: 
     - uses: actions/checkout@v2
     - name: Set up JDK
@@ -13,4 +17,4 @@ jobs:
       run: chmod +x src/library-server/gradlew
     - name: Build with Gradle.
       run: ./gradlew build
-      working-directory: ./src/library-server/
+      working-directory: ${{env.project-directory}}

@@ -4,6 +4,9 @@ jobs:
   build: 
     runs-on: ubuntu-latest
 
+    env:
+      project-directory: ./src/library-client/
+
     strategy:
       matrix: 
         node-version: [12.x]
@@ -15,6 +18,6 @@ jobs:
         with: 
           node-version: ${{matrix.node-version}}
       - run: npm ci
-        working-directory: ./src/library-client/
+        working-directory: ${{env.project-directory}}
       - run: npm run build
-        working-directory: ./src/library-client/
+        working-directory: ${{env.project-directory}}
