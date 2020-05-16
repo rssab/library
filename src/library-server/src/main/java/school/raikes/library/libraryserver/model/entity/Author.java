@@ -12,5 +12,7 @@ public class Author {
 
   @Column private String firstName;
 
+  @Column private String middleName;
+
   @Column private String lastName;
 }

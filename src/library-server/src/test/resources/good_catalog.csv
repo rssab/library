@@ -1,0 +1,5 @@
+Barcode,ISBN,Title,Subtitle,Edition,Authors,Print Type,Page Count,Publisher,Publish Date,Acquisition Date,Shelf,Type,Manual,Notes
+00011,123456789,"Karl's Big Happy Adventure","Karl Moves to the Bay Area",1,"Karl Shaffer",BOOK,3,Karl Shaffer Ltd.,5/14/2020,5/15/2020,1,BOOK,TRUE,
+00022,123456790,"Matthew Vavricek","Memoirs from a Raikes School Student",1,"Matthew Vavricek",BOOK,1,Mathvav Co.,5/14/2019,5/15/2019,1,BOOK,TRUE,
+00033,123456791,"Matthew Vavricek","Memoirs from a Raikes School Student",2,"Matthew Vavricek",BOOK,3,Mathvav Co.,5/14/2020,5/15/2020,1,BOOK,TRUE,
+00044,123456799,"Computer Science Education","Lessons from an Elite Nebraskan Program",1,"Valentine,Cooper,Keck",BOOK,20,Jeffrey S. Raikes School of Computer Science and Management,5/14/2020,5/15/2020,1,BOOK,FALSE,

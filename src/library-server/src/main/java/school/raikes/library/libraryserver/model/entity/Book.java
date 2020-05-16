@@ -8,25 +8,23 @@ import lombok.Data;
 @Entity
 @Data
 public class Book {
+  @ManyToMany List<Tag> tags;
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToMany List<Tag> tags;
-
   @Column(length = 64)
   private String isbn;
 
-  @ManyToOne private Type type;
-
-  @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "book", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<Copy> copies;
 
   @Column private String title;
 
   @Column private String subtitle;
 
-  @Column private int edition;
+  @Column private Integer edition;
 
   @Column @Lob private byte[] coverImage;
 

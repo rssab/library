@@ -17,7 +17,7 @@ import school.raikes.library.libraryserver.exceptions.WebApplicationException;
  * request based on the passed JWT. Issues an exception if no JWT is found, triggering an error.
  */
 public class JwtTokenFilter extends GenericFilterBean {
-  private JwtTokenProvider jwtTokenProvider;
+  private final JwtTokenProvider jwtTokenProvider;
 
   public JwtTokenFilter(JwtTokenProvider jwtTokenProvider) {
     this.jwtTokenProvider = jwtTokenProvider;

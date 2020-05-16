@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -17,12 +18,13 @@ public class Copy {
   @ManyToOne
   @JoinColumn(name = "book_id")
   @JsonIgnore
+  @ToString.Exclude
   private Book book;
 
   @Temporal(TemporalType.DATE)
   private Date acquisitionDate;
 
-  @Column private String barcode;
+  @Column private Long barcode;
 
   @ManyToOne private Shelf location;
 }

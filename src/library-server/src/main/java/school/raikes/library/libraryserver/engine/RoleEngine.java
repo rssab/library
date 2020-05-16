@@ -8,7 +8,7 @@ import school.raikes.library.libraryserver.model.entity.Role;
 @Service
 public class RoleEngine implements IRoleEngine {
 
-  private IRoleAccessor roleAccessor;
+  private final IRoleAccessor roleAccessor;
 
   public RoleEngine(IRoleAccessor roleAccessor) {
     this.roleAccessor = roleAccessor;
