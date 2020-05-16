@@ -9,9 +9,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Move to Server Directory.
-      run: cd src/library-server/
     - name: Make Gradle Executable.
-      run: chmod +x ./gradlew
+      run: chmod +x src/library-server/gradlew
     - name: Build with Gradle.
-      run: ./gradlew build
+      run: src/library-server/gradlew build
