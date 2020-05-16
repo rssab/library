@@ -12,6 +12,6 @@ jobs:
     - name: Move to Server Directory.
       run: cd src/library-server/
     - name: Make Gradle Executable.
-      run: chmod +x gradlew
+      run: chmod +x ./gradlew
     - name: Build with Gradle.
       run: ./gradlew build
