@@ -2,7 +2,6 @@ name: Lint/Build for library-server
 on: [push, pull_request]
 jobs: 
   build: 
-    strategy:
     runs-on: ubuntu-latest
     steps: 
     - uses: actions/checkout@v2
