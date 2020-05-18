@@ -1,40 +1,42 @@
 package school.raikes.library.libraryserver.engine;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.ICheckoutAccessor;
+import school.raikes.library.libraryserver.accessor.ICopyAccessor;
 import school.raikes.library.libraryserver.accessor.ILibraryAccountAccessor;
+import school.raikes.library.libraryserver.exceptions.WebApplicationException;
 import school.raikes.library.libraryserver.model.entity.Checkout;
 import school.raikes.library.libraryserver.model.entity.Copy;
 import school.raikes.library.libraryserver.model.entity.LibraryAccount;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
-
 @Service
 public class CheckoutEngine implements ICheckoutEngine {
-  /**
-   * Denotes the amount of time a book is checked out by default.
-   */
+  /** Denotes the amount of time a book is checked out by default. */
   private static final int CHECKOUT_DURATION_MILLIS = 1209600000; // 2 Weeks
 
-  /**
-   * Denotes the amount of time a checkout may be extended.
-   */
+  /** Denotes the amount of time a checkout may be extended. */
   private static final int EXTENSION_DURATION_MILLIS = 604800000; // 1 Week.
 
-  /**
-   * Denotes the amount of time before a book is due that it may be extended.
-   */
+  /** Denotes the amount of time before a book is due that it may be extended. */
   private static final int EXTENSION_WINDOW = 86400000; // 24 Hours
 
   private final ICheckoutAccessor checkoutAccessor;
   private final ILibraryAccountAccessor libraryAccountAccessor;
+  private final ICopyAccessor copyAccessor;
 
   @Autowired
-  public CheckoutEngine(ICheckoutAccessor checkoutAccessor) {
+  public CheckoutEngine(
+      ICheckoutAccessor checkoutAccessor,
+      ILibraryAccountAccessor libraryAccountAccessor,
+      ICopyAccessor copyAccessor) {
     this.checkoutAccessor = checkoutAccessor;
+    this.libraryAccountAccessor = libraryAccountAccessor;
+    this.copyAccessor = copyAccessor;
   }
 
   @Override
@@ -109,36 +111,59 @@ public class CheckoutEngine implements ICheckoutEngine {
 
   @Override
   public Checkout checkout(String nuid, Copy copy) {
-    return null;
+    Optional<LibraryAccount> account = this.libraryAccountAccessor.findByNuid(nuid);
+
+    if (!account.isPresent()) {
+      throw new WebApplicationException(
+          String.format("No user exists with NUID: %s", nuid), HttpStatus.NOT_FOUND);
+    }
+
+    return checkout(account.get(), copy);
   }
 
   @Override
   public Checkout checkout(String nuid, String barcode) {
-    return null;
+    Optional<Copy> copy = copyAccessor.findByBarcode(barcode);
+
+    if (!copy.isPresent()) {
+      throw new WebApplicationException(
+          String.format("The barcode (%s) does not correspond to a known book", barcode),
+          HttpStatus.NOT_FOUND);
+    }
+
+    Optional<LibraryAccount> account = this.libraryAccountAccessor.findByNuid(nuid);
+
+    if (!account.isPresent()) {
+      throw new WebApplicationException(
+          String.format("No user exists with NUID: %s", nuid), HttpStatus.NOT_FOUND);
+    }
+
+    return checkout(account.get(), copy.get());
   }
 
   @Override
   public Checkout checkin(Checkout checkout) {
-    return null;
+    checkout.setCheckinDate(Calendar.getInstance().getTime());
+    return save(checkout);
   }
 
   @Override
   public Checkout save(Checkout checkout) {
-    return null;
+    return this.checkoutAccessor.save(checkout);
   }
 
   @Override
   public Iterable<Checkout> saveAll(Iterable<Checkout> checkouts) {
-    return null;
+    return this.checkoutAccessor.saveAll(checkouts);
   }
 
   @Override
   public void delete(Checkout checkout) {
-
+    this.checkoutAccessor.delete(checkout);
   }
 
   @Override
   public void deleteAll(Iterable<Checkout> checkouts) {
-
+    this.checkoutAccessor.deleteAll(checkouts);
   }
 }
