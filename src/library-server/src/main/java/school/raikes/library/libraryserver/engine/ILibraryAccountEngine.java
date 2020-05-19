@@ -1,5 +1,6 @@
 package school.raikes.library.libraryserver.engine;
 
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import school.raikes.library.libraryserver.model.entity.LibraryAccount;
@@ -15,7 +16,7 @@ public interface ILibraryAccountEngine extends UserDetailsService {
 
   Iterable<LibraryAccount> findAllWithRole(Role role);
 
-  LibraryAccount findByNuid(String nuid);
+  Optional<LibraryAccount> findByNuid(String nuid);
 
   LibraryAccount findById(Long id);
 
