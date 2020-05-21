@@ -19,12 +19,6 @@ public class CheckoutEngine implements ICheckoutEngine {
   /** Denotes the amount of time a book is checked out by default. */
   private static final int CHECKOUT_DURATION_MILLIS = 1209600000; // 2 Weeks
 
-  /** Denotes the amount of time a checkout may be extended. */
-  private static final int EXTENSION_DURATION_MILLIS = 604800000; // 1 Week.
-
-  /** Denotes the amount of time before a book is due that it may be extended. */
-  private static final int EXTENSION_WINDOW = 86400000; // 24 Hours
-
   private final ICheckoutAccessor checkoutAccessor;
   private final ILibraryAccountAccessor libraryAccountAccessor;
   private final ICopyAccessor copyAccessor;
