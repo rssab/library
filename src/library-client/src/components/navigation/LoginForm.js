@@ -33,18 +33,20 @@ const LoginForm = props => {
   };
 
   const renderLoginError = () => {
-    return props.error ? (
-      <Alert color="primary" className="mx-2">
-        {props.error}
-      </Alert>
-    ) : null;
+    return props.errors
+      ? props.errors.map((err, idx) => (
+          <Alert key={idx} color="primary" className="mx-2">
+            {err.response}
+          </Alert>
+        ))
+      : null;
   };
 
   return (
-    <div className="login-pane">
+    <div className="login-pane pt-3">
+      {/* Conditionally render errors */}
+      {renderLoginError()}
       <Form className="px-4" onSubmit={handleSubmit}>
-        {/* Conditionally render errors */}
-        {renderLoginError()}
         <FormGroup row>
           <Label for="nuid">NUID</Label>
           <Input

@@ -37,15 +37,19 @@ const Navigation = () => {
     loggedIn,
     user,
     loginCallback,
-    logoutCallback
+    logoutCallback,
+    errors
   ) => {
     if (loggedIn) {
       return (
-        <UserDropdown name={user.firstName} logoutCallback={logoutCallback} />
+        <UserDropdown
+          name={user.account.firstName}
+          logoutCallback={logoutCallback}
+        />
       );
     }
 
-    return <LoginForm loginCallback={loginCallback} />;
+    return <LoginForm loginCallback={loginCallback} errors={errors} />;
   };
 
   return (
@@ -74,7 +78,7 @@ const Navigation = () => {
                 {userContext =>
                   getLoginMenuText(
                     userContext.state.user != null
-                      ? userContext.state.user.nuid
+                      ? userContext.state.user.sub
                       : null
                   )
                 }
@@ -87,7 +91,8 @@ const Navigation = () => {
                     userContext.state.user != null,
                     userContext.state.user,
                     userContext.handleUserLogin,
-                    userContext.handleUserLogout
+                    userContext.handleUserLogout,
+                    userContext.state.errors
                   )
                 }
               </UserConsumer>

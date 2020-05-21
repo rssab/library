@@ -1,27 +1,35 @@
 import React, { useState } from "react";
 import { UserProvider } from "../context/UserContext";
-import { login } from "../data/Auth";
+import { AuthApiAccessor } from "../data/AuthApiAccessor";
+import ApiRequestHandler from "../data/ApiRequestHandler";
+import jwtDecode from "jwt-decode";
 
 const UserContainer = props => {
   const [token, setToken] = useState(null);
   const [errors, setErrors] = useState([]);
   const [user, setUser] = useState(null);
 
-  const handleUserLogin = (nuid, pin) => {
-    try {
-      let loginResult = login(nuid, pin);
+  const apiRequestHandler = ApiRequestHandler();
+  const authApiAccessor = AuthApiAccessor(apiRequestHandler);
 
-      setToken(loginResult.token);
-      setUser(loginResult.user);
-    } catch (err) {
-      //TODO(skmshaffer): Handle this better.
-      console.log(err);
-    }
+  const handleUserLogin = (nuid, pin) => {
+    authApiAccessor
+      .login(nuid, pin)
+      .then(result => {
+        setToken(result.token);
+        setUser(jwtDecode(result.token));
+        apiRequestHandler.setBearerToken(result.token);
+        setErrors([]);
+      })
+      .catch(err => {
+        setErrors([err]);
+      });
   };
 
   const handleUserLogout = () => {
     setUser(null);
     setToken(null);
+    apiRequestHandler.clearBearerToken();
   };
 
   return (
