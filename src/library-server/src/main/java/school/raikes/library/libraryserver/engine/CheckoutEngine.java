@@ -1,9 +1,14 @@
 package school.raikes.library.libraryserver.engine;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.ICheckoutAccessor;
@@ -15,19 +20,23 @@ import school.raikes.library.libraryserver.model.entity.Copy;
 import school.raikes.library.libraryserver.model.entity.LibraryAccount;
 
 @Service
+@Slf4j
 public class CheckoutEngine implements ICheckoutEngine {
   /** Denotes the amount of time a book is checked out by default. */
-  private static final int CHECKOUT_DURATION_MILLIS = 1209600000; // 2 Weeks
-
+  private final Duration checkoutDuration;
   private final ICheckoutAccessor checkoutAccessor;
   private final ILibraryAccountAccessor libraryAccountAccessor;
   private final ICopyAccessor copyAccessor;
 
   @Autowired
   public CheckoutEngine(
+      // Read Duration from configuration, default to 2 weeks if not provided.
+      @Value("${library.checkout.duration:14d}") Duration checkoutDuration,
       ICheckoutAccessor checkoutAccessor,
       ILibraryAccountAccessor libraryAccountAccessor,
       ICopyAccessor copyAccessor) {
+    log.debug("Checkout Duration Set to: {}", checkoutDuration);
+    this.checkoutDuration = checkoutDuration;
     this.checkoutAccessor = checkoutAccessor;
     this.libraryAccountAccessor = libraryAccountAccessor;
     this.copyAccessor = copyAccessor;
@@ -102,7 +111,9 @@ public class CheckoutEngine implements ICheckoutEngine {
 
     Calendar calendar = Calendar.getInstance();
     checkout.setCheckoutDate(calendar.getTime());
-    calendar.add(Calendar.MILLISECOND, CHECKOUT_DURATION_MILLIS);
+
+    // Safe cast since we definitely wouldn't expect a checkout period of over ~68 years.
+    calendar.add(Calendar.SECOND, (int) checkoutDuration.get(ChronoUnit.SECONDS));
     checkout.setDueDate(calendar.getTime());
 
     return this.checkoutAccessor.save(checkout);
