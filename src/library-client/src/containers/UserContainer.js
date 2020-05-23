@@ -1,47 +1,52 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { UserProvider } from "../context/UserContext";
-import { login } from "../data/Auth";
+import { AuthApiAccessor } from "../data/AuthApiAccessor";
+import ApiRequestHandler from "../data/ApiRequestHandler";
+import jwtDecode from "jwt-decode";
 
-class UserContainer extends Component {
-  state = {
-    token: null,
-    errors: [],
-    user: null
-  };
+const UserContainer = props => {
+  const [token, setToken] = useState(null);
+  const [errors, setErrors] = useState([]);
+  const [user, setUser] = useState(null);
 
-  handleUserLogin = (nuid, pin) => {
-    try {
-      let loginResult = login(nuid, pin);
-      this.setState({
-        user: loginResult.user,
-        token: loginResult.token
+  const apiRequestHandler = ApiRequestHandler();
+  const authApiAccessor = AuthApiAccessor(apiRequestHandler);
+
+  const handleUserLogin = (nuid, pin) => {
+    authApiAccessor
+      .login(nuid, pin)
+      .then(result => {
+        setToken(result.token);
+        setUser(jwtDecode(result.token));
+        apiRequestHandler.setBearerToken(result.token);
+        setErrors([]);
+      })
+      .catch(err => {
+        setErrors([err]);
       });
-    } catch (err) {
-      //TODO(skmshaffer): Handle this better.
-      console.log(err);
-    }
   };
 
-  handleUserLogout = () => {
-    this.setState(state => ({
-      user: null,
-      token: null
-    }));
+  const handleUserLogout = () => {
+    setUser(null);
+    setToken(null);
+    apiRequestHandler.clearBearerToken();
   };
 
-  render() {
-    return (
-      <UserProvider
-        value={{
-          state: this.state,
-          handleUserLogin: this.handleUserLogin,
-          handleUserLogout: this.handleUserLogout
-        }}
-      >
-        {this.props.children}
-      </UserProvider>
-    );
-  }
-}
+  return (
+    <UserProvider
+      value={{
+        state: {
+          token: token,
+          errors: errors,
+          user: user
+        },
+        handleUserLogin: handleUserLogin,
+        handleUserLogout: handleUserLogout
+      }}
+    >
+      {props.children}
+    </UserProvider>
+  );
+};
 
 export default UserContainer;

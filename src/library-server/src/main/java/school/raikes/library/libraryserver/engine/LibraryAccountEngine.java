@@ -22,7 +22,7 @@ import school.raikes.library.libraryserver.security.JwtTokenProvider;
 @Service
 public class LibraryAccountEngine implements ILibraryAccountEngine {
 
-  public static final String AUTH_FAILURE_MESSAGE = "Invalid username or password.";
+  public static final String AUTH_FAILURE_MESSAGE = "Invalid NUID or PIN.";
   private static final String EXISTING_USER_FAILURE_MESSAGE =
       "User with provided NUID already exists.";
   private static final String NUID_NOT_FOUND_FAILURE_MESSAGE = "NUID not found.";
@@ -55,7 +55,7 @@ public class LibraryAccountEngine implements ILibraryAccountEngine {
   }
 
   @Override
-  public LibraryAccount findByNuid(String nuid) {
+  public Optional<LibraryAccount> findByNuid(String nuid) {
     return libraryAccountAccessor.findByNuid(nuid);
   }
 
@@ -68,10 +68,10 @@ public class LibraryAccountEngine implements ILibraryAccountEngine {
 
   @Override
   public LibraryAccount save(LibraryAccount account) {
-    LibraryAccount current = findByNuid(account.getNuid());
+    Optional<LibraryAccount> current = findByNuid(account.getNuid());
 
-    if (current != null) {
-      if (!current.getPassword().equals(account.getPassword())) {
+    if (current.isPresent()) {
+      if (!current.get().getPassword().equals(account.getPassword())) {
         account.setPin(passwordEncoder.encode(account.getPin()));
       }
     }
@@ -88,7 +88,8 @@ public class LibraryAccountEngine implements ILibraryAccountEngine {
   public String login(String nuid, String pin) {
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(nuid, pin));
-      return jwtTokenProvider.createToken(nuid, libraryAccountAccessor.findByNuid(nuid).getRole());
+      return jwtTokenProvider.createToken(
+          nuid, libraryAccountAccessor.findByNuid(nuid).get().getRole());
     } catch (AuthenticationException e) {
       throw new WebApplicationException(AUTH_FAILURE_MESSAGE, HttpStatus.UNAUTHORIZED);
     }
@@ -107,16 +108,17 @@ public class LibraryAccountEngine implements ILibraryAccountEngine {
 
   @Override
   public LibraryAccount whoami(HttpServletRequest request) {
-    return libraryAccountAccessor.findByNuid(
-        jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(request)));
+    return libraryAccountAccessor
+        .findByNuid(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(request)))
+        .get();
   }
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    LibraryAccount account = findByNuid(username);
+    Optional<LibraryAccount> account = findByNuid(username);
 
-    if (account != null) {
-      return account;
+    if (account.isPresent()) {
+      return account.get();
     } else {
       throw new UsernameNotFoundException(NUID_NOT_FOUND_FAILURE_MESSAGE);
     }
