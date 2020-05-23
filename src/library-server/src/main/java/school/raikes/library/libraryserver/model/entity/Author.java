@@ -4,6 +4,11 @@ import javax.persistence.*;
 import lombok.Data;
 
 @Entity
+@Table(
+    uniqueConstraints = {
+      // Authors should have unique names.
+      @UniqueConstraint(columnNames = {"firstName", "middleName", "lastName"})
+    })
 @Data
 public class Author {
   @Id
@@ -14,5 +19,6 @@ public class Author {
 
   @Column private String middleName;
 
-  @Column private String lastName;
+  @Column(nullable = false)
+  private String lastName;
 }

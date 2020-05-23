@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,18 +17,21 @@ public class LibraryAccount implements UserDetails {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(unique = true, length = 3)
+  @Column(unique = true, length = 8, nullable = false)
   @Size(min = 8, max = 8)
   private String nuid;
 
-  @Column(length = 60)
+  @Column(length = 60, nullable = false)
   private String pin;
 
-  @ManyToOne @NotNull private Role role;
+  @ManyToOne(optional = false)
+  private Role role;
 
-  @Column private String firstName;
+  @Column(nullable = false)
+  private String firstName;
 
-  @Column private String lastName;
+  @Column(nullable = false)
+  private String lastName;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

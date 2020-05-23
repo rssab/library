@@ -12,7 +12,8 @@ public class Tag {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column private String name;
+  @Column(nullable = false)
+  private String name;
 
   @ManyToMany(mappedBy = "tags")
   @ToString.Exclude
