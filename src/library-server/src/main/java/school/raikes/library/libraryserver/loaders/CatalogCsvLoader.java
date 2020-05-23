@@ -19,7 +19,6 @@ import school.raikes.library.libraryserver.readers.CatalogCsvReader;
 @Component
 @Slf4j
 public class CatalogCsvLoader {
-
   private final IBookEngine bookEngine;
   private final IAuthorEngine authorEngine;
   private final IShelfEngine shelfEngine;

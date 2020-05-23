@@ -11,7 +11,6 @@ import school.raikes.library.libraryserver.readers.CatalogCsvReader;
 
 @Configuration
 public class CsvReaderConfiguration {
-
   private IBookEngine bookEngine;
   private IAuthorEngine authorEngine;
   private IShelfEngine shelfEngine;
