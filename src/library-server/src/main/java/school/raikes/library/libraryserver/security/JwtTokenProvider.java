@@ -55,7 +55,7 @@ public class JwtTokenProvider {
     Claims claims = Jwts.claims().setSubject(nuid);
     claims.put(CLAIMS_ROLE_KEY, new SimpleGrantedAuthority(role.getName()));
 
-    LibraryAccount account = libraryAccountEngine.findByNuid(nuid);
+    LibraryAccount account = libraryAccountEngine.findByNuid(nuid).get();
 
     Map<String, String> userDetails = new HashMap<>();
     userDetails.put("firstName", account.getFirstName());
