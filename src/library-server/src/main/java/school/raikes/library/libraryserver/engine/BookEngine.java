@@ -27,7 +27,7 @@ public class BookEngine implements IBookEngine {
   }
 
   @Override
-  public Map<String, Book> loadIsbnBookMap() {
+  public Map<String, Book> getIsbnBookMap() {
     Map<String, Book> bookMap = new HashMap<>();
 
     findAll().forEach((b) -> bookMap.put(b.getIsbn(), b));

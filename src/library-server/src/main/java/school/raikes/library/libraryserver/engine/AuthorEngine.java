@@ -23,7 +23,7 @@ public class AuthorEngine implements IAuthorEngine {
   }
 
   @Override
-  public Map<String, Author> loadNameAuthorMap() {
+  public Map<String, Author> getNameAuthorMap() {
     Map<String, Author> authorMap = new HashMap<>();
 
     findAll()

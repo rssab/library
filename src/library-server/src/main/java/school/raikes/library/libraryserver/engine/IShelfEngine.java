@@ -10,7 +10,12 @@ public interface IShelfEngine {
 
   Optional<Shelf> findByNumber(int number);
 
-  Map<Integer, Shelf> loadNumberShelfMap();
+  /**
+   * Retrieves all shelves in a {@link Map} of the Shelf's number to the individual shelf entity.
+   * This is primarily used in the reading process where serialized data is imported into the
+   * system.
+   */
+  Map<Integer, Shelf> getNumberShelfMap();
 
   Shelf save(Shelf shelf);
 
