@@ -24,7 +24,12 @@ public class CatalogCsvReader {
   public static final int LONG_NAME_DETERMINANT = 6;
   public static final Set<String> EMPTY_VALUES = ImmutableSet.of("", "-", "undefined");
   public static final String DATE_FORMAT = "MM/dd/yyyy";
-  public static final String MANUAL_TAG_NAME = "MANUAL";
+
+  /**
+   * Name of the tag used to identify read items as manual, that is the information was entered by hand
+   * instead of being loaded in based on ISBN.
+   */
+  public static final String MANUALLY_ENTERED_METADATA_TAG_NAME = "MANUAL";
 
   /* KEYS */
   public static final String BARCODE_KEY = "Barcode";
@@ -200,11 +205,11 @@ public class CatalogCsvReader {
       c.setAcquisitionDate(parsedAcquisitionDate);
       c.setLocation(s);
 
-      Tag manualTag = tagMap.get(MANUAL_TAG_NAME);
+      Tag manualTag = tagMap.get(MANUALLY_ENTERED_METADATA_TAG_NAME);
       if (manualTag == null) {
         manualTag = new Tag();
-        manualTag.setName(MANUAL_TAG_NAME);
-        tagMap.put(MANUAL_TAG_NAME, manualTag);
+        manualTag.setName(MANUALLY_ENTERED_METADATA_TAG_NAME);
+        tagMap.put(MANUALLY_ENTERED_METADATA_TAG_NAME, manualTag);
       }
 
       Book b = isbnBookMap.get(isbn);
