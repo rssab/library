@@ -9,16 +9,16 @@ const UserContainer = props => {
   const [errors, setErrors] = useState([]);
   const [user, setUser] = useState(null);
 
-  const apiRequestHandler = RequestHandler();
-  const authApiAccessor = AuthService(apiRequestHandler);
+  const requestHandler = RequestHandler();
+  const authService = AuthService(requestHandler);
 
   const handleUserLogin = (nuid, pin) => {
-    authApiAccessor
+    authService
       .login(nuid, pin)
       .then(result => {
         setToken(result.token);
         setUser(jwtDecode(result.token));
-        apiRequestHandler.setBearerToken(result.token);
+        requestHandler.setBearerToken(result.token);
         setErrors([]);
       })
       .catch(err => {
@@ -29,12 +29,12 @@ const UserContainer = props => {
   const handleUserLogout = () => {
     setUser(null);
     setToken(null);
-    apiRequestHandler.clearBearerToken();
+    requestHandler.clearBearerToken();
   };
 
   const isLoggedIn = () => {
-    return user !== null & token !== null; 
-  }
+    return (user !== null) & (token !== null);
+  };
 
   return (
     <UserProvider
@@ -47,7 +47,7 @@ const UserContainer = props => {
         handleUserLogin: handleUserLogin,
         handleUserLogout: handleUserLogout,
         isLoggedIn: isLoggedIn,
-        apiRequestHandler: apiRequestHandler
+        requestHandler: requestHandler
       }}
     >
       {props.children}

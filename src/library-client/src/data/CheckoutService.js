@@ -1,7 +1,5 @@
 /**
- * Module for handling checkin/checkout actions from the system. 
+ * Module for handling checkin/checkout actions from the system.
  */
 
-const CheckoutService = requestHandler => {
-    
-}
+const CheckoutService = requestHandler => {};

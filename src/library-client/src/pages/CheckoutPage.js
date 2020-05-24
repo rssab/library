@@ -1,19 +1,29 @@
 import React from "react";
 
-import { UserProvider } from '../context/UserContext';
+import { UserConsumer } from "../context/UserContext";
+import CheckoutForm from "../components/checkout/CheckoutForm";
 
-const CheckoutPage = (props) => {
-    
-}
+const CheckoutPage = props => {
+  console.log("Here!");
 
-export default (props) => {
-    return(
-        <UserProvider>
-            {
-                value => {
-                    <CheckoutPage {...props} userContext={value}/>
-                }
-            }
-        </UserProvider>
-    );
-} 
+  return (
+    <div>
+      <h1 className="display-4">Checkout</h1>
+      <CheckoutForm />
+    </div>
+  );
+};
+
+export default props => {
+  return (
+    <UserConsumer>
+      {value => (
+        <CheckoutPage
+          {...props}
+          requestHandler={value.requestHandler}
+          loggedIn={value.isLoggedIn()}
+        />
+      )}
+    </UserConsumer>
+  );
+};

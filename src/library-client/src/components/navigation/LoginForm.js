@@ -63,7 +63,7 @@ const LoginForm = props => {
           </FormFeedback>
         </FormGroup>
         <FormGroup row>
-          <Label for={"pin"}>PIN</Label>
+          <Label for="pin">PIN</Label>
           <Input
             type="password"
             name="pin"
