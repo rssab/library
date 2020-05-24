@@ -6,7 +6,7 @@ import ApiError from "./ApiError";
  * methods for POST/GET requests as well as updating or clearing the token with
  * login/logout.
  */
-const ApiRequestHandler = token => {
+const RequestHandler = token => {
   let headers = {
     "Content-Type": "application/json"
   };
@@ -72,4 +72,4 @@ const ApiRequestHandler = token => {
   };
 };
 
-export default ApiRequestHandler;
+export default RequestHandler;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { UserProvider } from "../context/UserContext";
-import { AuthApiAccessor } from "../data/AuthApiAccessor";
-import ApiRequestHandler from "../data/ApiRequestHandler";
+import { AuthService } from "../data/AuthService";
+import RequestHandler from "../data/RequestHandler";
 import jwtDecode from "jwt-decode";
 
 const UserContainer = props => {
@@ -9,8 +9,8 @@ const UserContainer = props => {
   const [errors, setErrors] = useState([]);
   const [user, setUser] = useState(null);
 
-  const apiRequestHandler = ApiRequestHandler();
-  const authApiAccessor = AuthApiAccessor(apiRequestHandler);
+  const apiRequestHandler = RequestHandler();
+  const authApiAccessor = AuthService(apiRequestHandler);
 
   const handleUserLogin = (nuid, pin) => {
     authApiAccessor
@@ -32,6 +32,10 @@ const UserContainer = props => {
     apiRequestHandler.clearBearerToken();
   };
 
+  const isLoggedIn = () => {
+    return user !== null & token !== null; 
+  }
+
   return (
     <UserProvider
       value={{
@@ -41,7 +45,9 @@ const UserContainer = props => {
           user: user
         },
         handleUserLogin: handleUserLogin,
-        handleUserLogout: handleUserLogout
+        handleUserLogout: handleUserLogout,
+        isLoggedIn: isLoggedIn,
+        apiRequestHandler: apiRequestHandler
       }}
     >
       {props.children}

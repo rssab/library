@@ -1,7 +1,7 @@
 /**
  * Module for handling login and logout from the system.
  */
-const AuthApiAccessor = requestHandler => {
+const AuthService = requestHandler => {
   const login = async (nuid, pin) => {
     return requestHandler.post("/api/login", {
       nuid: nuid,
@@ -14,4 +14,4 @@ const AuthApiAccessor = requestHandler => {
   };
 };
 
-export { AuthApiAccessor };
+export { AuthService };
