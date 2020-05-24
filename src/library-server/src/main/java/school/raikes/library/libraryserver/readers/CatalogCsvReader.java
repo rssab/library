@@ -16,6 +16,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import school.raikes.library.libraryserver.model.entity.*;
+import school.raikes.library.libraryserver.validators.BarcodeValidators;
 
 @Builder
 public class CatalogCsvReader {
@@ -74,8 +75,8 @@ public class CatalogCsvReader {
       long parsedBarcode;
       try {
         // Assume Code 3 of 9 barcode, trim check digit and parse into value.
-        parsedBarcode = Long.parseLong(barcode.substring(0, barcode.length() - 1));
-      } catch (NumberFormatException nfe) {
+        parsedBarcode = BarcodeValidators.validateCode39Barcode(barcode);
+      } catch (IllegalArgumentException iae) {
         // Safe cast as we generally wouldn't expect to be reading a CSV file over 2B records.
         throw new ParseException("Failed to parse Barcode", (int) parser.getCurrentLineNumber());
       }
