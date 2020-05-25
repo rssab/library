@@ -26,8 +26,8 @@ public class CatalogCsvReader {
   public static final String DATE_FORMAT = "MM/dd/yyyy";
 
   /**
-   * Name of the tag used to identify read items as manual, that is the information was entered by hand
-   * instead of being loaded in based on ISBN.
+   * Name of the tag used to identify read items as manual, that is the information was entered by
+   * hand instead of being loaded in based on ISBN.
    */
   public static final String MANUALLY_ENTERED_METADATA_TAG_NAME = "MANUAL";
 
