@@ -29,7 +29,7 @@ public class TagEngine implements ITagEngine {
   }
 
   @Override
-  public Map<String, Tag> loadNameTagMap() {
+  public Map<String, Tag> getNameTagMap() {
     Map<String, Tag> tagMap = new HashMap<>();
 
     findAll().forEach((t) -> tagMap.put(t.getName(), t));

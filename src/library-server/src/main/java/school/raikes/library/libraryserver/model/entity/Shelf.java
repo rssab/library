@@ -12,7 +12,8 @@ public class Shelf {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column private int number;
+  @Column(nullable = false)
+  private int number;
 
   @OneToMany(mappedBy = "location")
   @ToString.Exclude

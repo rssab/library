@@ -3,7 +3,6 @@ package school.raikes.library.libraryserver.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.ToString;
 
@@ -14,9 +13,8 @@ public class Copy {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull
   @ManyToOne
-  @JoinColumn(name = "book_id")
+  @JoinColumn(name = "book_id", nullable = false)
   @JsonIgnore
   @ToString.Exclude
   private Book book;
@@ -24,7 +22,9 @@ public class Copy {
   @Temporal(TemporalType.DATE)
   private Date acquisitionDate;
 
-  @Column private Long barcode;
+  @Column(nullable = false)
+  private Long barcode;
 
-  @ManyToOne private Shelf location;
+  @ManyToOne(optional = false)
+  private Shelf location;
 }

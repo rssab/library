@@ -10,7 +10,11 @@ public interface ITagEngine {
 
   Optional<Tag> findByName(String name);
 
-  Map<String, Tag> loadNameTagMap();
+  /**
+   * Retrieves all tags in a {@link Map} of the tag's name to the individual tag entity. This is
+   * primarily used in the reading process where serialized data is imported into the system.
+   */
+  Map<String, Tag> getNameTagMap();
 
   Tag save(Tag tag);
 

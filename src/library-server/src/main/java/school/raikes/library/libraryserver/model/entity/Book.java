@@ -6,6 +6,7 @@ import javax.persistence.*;
 import lombok.Data;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"isbn"})})
 @Data
 public class Book {
   @ManyToMany List<Tag> tags;
@@ -20,7 +21,8 @@ public class Book {
   @OneToMany(mappedBy = "book", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<Copy> copies;
 
-  @Column private String title;
+  @Column(nullable = false)
+  private String title;
 
   @Column private String subtitle;
 

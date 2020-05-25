@@ -11,7 +11,6 @@ import school.raikes.library.libraryserver.readers.CatalogCsvReader;
 
 @Configuration
 public class CsvReaderConfiguration {
-
   private IBookEngine bookEngine;
   private IAuthorEngine authorEngine;
   private IShelfEngine shelfEngine;
@@ -32,10 +31,10 @@ public class CsvReaderConfiguration {
   @Bean
   public CatalogCsvReader catalogCsvReader() {
     return CatalogCsvReader.builder()
-        .isbnBookMap(this.bookEngine.loadIsbnBookMap())
-        .authorMap(this.authorEngine.loadNameAuthorMap())
-        .shelfMap(this.shelfEngine.loadNumberShelfMap())
-        .tagMap(this.tagEngine.loadNameTagMap())
+        .isbnBookMap(this.bookEngine.getIsbnBookMap())
+        .authorMap(this.authorEngine.getNameAuthorMap())
+        .shelfMap(this.shelfEngine.getNumberShelfMap())
+        .tagMap(this.tagEngine.getNameTagMap())
         .build();
   }
 }

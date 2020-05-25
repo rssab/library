@@ -27,7 +27,7 @@ public class ShelfEngine implements IShelfEngine {
   }
 
   @Override
-  public Map<Integer, Shelf> loadNumberShelfMap() {
+  public Map<Integer, Shelf> getNumberShelfMap() {
     Map<Integer, Shelf> shelfMap = new HashMap<>();
 
     findAll().forEach((s) -> shelfMap.put(s.getNumber(), s));

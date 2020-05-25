@@ -7,7 +7,12 @@ import school.raikes.library.libraryserver.model.entity.Author;
 public interface IAuthorEngine {
   Iterable<Author> findAll();
 
-  Map<String, Author> loadNameAuthorMap();
+  /**
+   * Retrieves all authors in a {@link Map} of the author's first, middle, and last name fields
+   * (first + middle + last, no spaces) to the individual author entity. This is primarily used in
+   * the reading process where serialized data is imported into the system.
+   */
+  Map<String, Author> getNameAuthorMap();
 
   Author save(Author author);
 
