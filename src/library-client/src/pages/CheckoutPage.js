@@ -24,7 +24,13 @@ const CheckoutPage = props => {
 
   // Checkout Actions
   const handleCheckoutResponse = response => {
+    // Clear any errors that may have occurred.
     setErrorMessage(null);
+
+    // Clear previous Redirect if it still exists.
+    setCheckoutConfirmationRedirectionLocation(null);
+
+    // Update State and Redirect.
     setSuccessMessage("Item has been checked out successfully!");
     setCheckoutResponse(response);
     setCheckoutConfirmationRedirectionLocation(response.id);
@@ -53,11 +59,12 @@ const CheckoutPage = props => {
     if (id && !checkoutResponse) {
       checkoutService.getCheckout(id).then(setCheckoutResponse);
     }
-  });
+  }, [checkoutService, id, checkoutResponse, setCheckoutResponse]);
 
+  // Load the checkout duration from the system.
   useEffect(() => {
     checkoutService.getCheckoutDuration().then(setCheckoutDuration);
-  });
+  }, [setCheckoutDuration, checkoutService]);
 
   // Render the main component
   let mainComponent;
@@ -74,8 +81,7 @@ const CheckoutPage = props => {
       <CheckoutForm
         loggedIn={props.loggedIn}
         error={errorMessage}
-        // TODO(skmshaffer): Pull this dynamically from the API
-        checkoutPeriod="two weeks"
+        checkoutPeriod={checkoutDuration}
         checkoutWithAuthCallback={checkoutWithAuth}
         checkoutWithoutAuthCallback={checkoutWithoutAuth}
       />
@@ -86,7 +92,7 @@ const CheckoutPage = props => {
   let redirect;
   if (checkoutConfirmationRedirectLocation) {
     redirect = (
-      <Redirect to={`/checkout/${checkoutConfirmationRedirectLocation}`} />
+      <Redirect push to={`/checkout/${checkoutConfirmationRedirectLocation}`} />
     );
   }
 

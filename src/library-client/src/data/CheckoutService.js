@@ -2,6 +2,11 @@
  * Module for handling checkin/checkout actions from the system.
  */
 const CheckoutService = requestHandler => {
+  /**
+   * Triggers a checkout when the provided
+   * requestHandler is already authenticated (i.e. a user is
+   * already logged in)
+   */
   const checkoutWithAuth = async barcode => {
     return {
       id: 123,
@@ -27,6 +32,10 @@ const CheckoutService = requestHandler => {
     };
   };
 
+  /**
+   * Triggers a checkout when the provided requestHandler is NOT authenticated (i.e
+   * a user is not currently logged in.)
+   */
   const checkoutWithoutAuth = async (barcode, nuid, pin) => {
     return {
       id: 123,
@@ -52,6 +61,9 @@ const CheckoutService = requestHandler => {
     };
   };
 
+  /**
+   * Retrieves a given checkout from the system.
+   */
   const getCheckout = async id => {
     return {
       id: id,
@@ -77,6 +89,10 @@ const CheckoutService = requestHandler => {
     };
   };
 
+  /**
+   * Retrieves the system's currently configured checkout
+   * duration in human readable format.
+   */
   const getCheckoutDuration = async () => {
     return "two weeks";
   };

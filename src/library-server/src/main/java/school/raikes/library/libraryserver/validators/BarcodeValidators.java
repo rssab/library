@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class BarcodeValidators {
+public class     BarcodeValidators {
   public static final int CODE_39_CHECKSUM_MODULO = 43;
   public static final char[] CODE_39_CHARACTER_SET = {
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',

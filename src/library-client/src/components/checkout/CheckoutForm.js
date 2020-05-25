@@ -10,7 +10,11 @@ import {
   FormFeedback
 } from "reactstrap";
 
-import { validateNuid, validatePin } from "../../common/validators";
+import {
+  validateNuid,
+  validatePin,
+  validateCode39Barcode
+} from "../../common/validators";
 
 const CheckoutForm = props => {
   const [nuidValidationError, setNuidValidationError] = React.useState(false);
@@ -26,18 +30,39 @@ const CheckoutForm = props => {
   const handleSubmit = event => {
     event.preventDefault();
 
+    let validBarcode;
+    let parsedBarcode;
+    if (barcode !== undefined) {
+      if (validateCode39Barcode(barcode)) {
+        // If it is CODE39, strip of the check digit.
+        parsedBarcode = barcode.substring(0, barcode.length - 1);
+        validBarcode = true;
+      } else {
+        // If it isn't CODE39, attempt to turn it into a number, if that succeeds, assume OK.
+        parsedBarcode = Number(barcode);
+        validBarcode = !isNaN(parsedBarcode);
+      }
+    } else {
+      validBarcode = false;
+    }
+
     if (!props.loggedIn) {
       const validNuid = validateNuid(nuid);
       const validPin = validatePin(pin);
 
-      if (validPin && validNuid) {
-        props.checkoutWithoutAuthCallback(barcode, nuid, pin);
+      if (validPin && validNuid && validBarcode) {
+        props.checkoutWithoutAuthCallback(parsedBarcode, nuid, pin);
       } else {
         setNuidValidationError(!validNuid);
         setPinValidationError(!validPin);
+        setBarcodeValidationError(!validBarcode);
       }
     } else {
-      props.checkoutWithAuthCallback(barcode);
+      if (validBarcode) {
+        props.checkoutWithAuthCallback(parsedBarcode);
+      } else {
+        setBarcodeValidationError(!validBarcode);
+      }
     }
   };
 
@@ -54,7 +79,7 @@ const CheckoutForm = props => {
             <Input
               type="text"
               name="nuid"
-              id="nuid"
+              id="checkout-nuid"
               onChange={e => setNuid(e.target.value)}
               invalid={nuidValidationError}
             />
@@ -67,7 +92,7 @@ const CheckoutForm = props => {
             <Input
               type="password"
               name="pin"
-              id="pin"
+              id="checkout-pin"
               onChange={e => setPin(e.target.value)}
               invalid={pinValidationError}
             />
@@ -99,7 +124,12 @@ const CheckoutForm = props => {
               name="barcode"
               id="barcode"
               onChange={e => setBarcode(e.target.value)}
+              invalid={barcodeValidationError}
             />
+            <FormFeedback>
+              That is not a valid barcode. Please try scanning the item again,
+              or enter the code from the barcode manually in this field.
+            </FormFeedback>
           </FormGroup>
           <FormGroup className="mt-5">
             <Button color="primary" block>
