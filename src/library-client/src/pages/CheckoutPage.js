@@ -9,7 +9,7 @@ const CheckoutPage = props => {
   return (
     <div>
       <h1 className="display-4">Checkout</h1>
-      <CheckoutForm />
+      <CheckoutForm loggedIn={props.loggedIn} />
     </div>
   );
 };
@@ -21,7 +21,8 @@ export default props => {
         <CheckoutPage
           {...props}
           requestHandler={value.requestHandler}
-          loggedIn={value.isLoggedIn()}
+          // loggedIn={value.isLoggedIn()}
+          loggedIn={false}
         />
       )}
     </UserConsumer>
