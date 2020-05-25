@@ -17,7 +17,7 @@ const App = () => {
               <Switch>
                 <Route path="/" exact></Route>
                 <Route path="/browse"></Route>
-                <Route path="/checkout" component={CheckoutPage}></Route>
+                <Route path="/checkout/:id?" component={CheckoutPage}></Route>
               </Switch>
             </Col>
           </Row>

@@ -2,14 +2,24 @@ import React from "react";
 
 import { UserConsumer } from "../context/UserContext";
 import CheckoutForm from "../components/checkout/CheckoutForm";
+import CheckoutService from "../data/CheckoutService";
+import CheckoutConfirmation from "../components/checkout/CheckoutConfirmation";
 
 const CheckoutPage = props => {
-  console.log("Here!");
+  const id = props.match.params.id;
+  const checkoutService = CheckoutService(props.requestHandler);
+
+  let mainComponent; 
+
+  if (id) {
+    mainComponent = <CheckoutConfirmation checkout={checkoutService.getCheckout(id)}/>
+  } else {
+    mainComponent = <CheckoutForm loggedIn={props.loggedIn} />
+  }
 
   return (
     <div>
-      <h1 className="display-4">Checkout</h1>
-      <CheckoutForm />
+      {mainComponent}
     </div>
   );
 };
