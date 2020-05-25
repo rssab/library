@@ -31,7 +31,8 @@ export default props => {
         <CheckoutPage
           {...props}
           requestHandler={value.requestHandler}
-          loggedIn={value.isLoggedIn()}
+          // loggedIn={value.isLoggedIn()}
+          loggedIn={false}
         />
       )}
     </UserConsumer>
