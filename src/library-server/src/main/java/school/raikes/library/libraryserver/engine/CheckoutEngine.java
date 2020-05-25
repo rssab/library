@@ -5,7 +5,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +23,7 @@ import school.raikes.library.libraryserver.model.entity.LibraryAccount;
 public class CheckoutEngine implements ICheckoutEngine {
   /** Denotes the amount of time a book is checked out by default. */
   private final Duration checkoutDuration;
+
   private final ICheckoutAccessor checkoutAccessor;
   private final ILibraryAccountAccessor libraryAccountAccessor;
   private final ICopyAccessor copyAccessor;

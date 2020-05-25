@@ -32,14 +32,13 @@ public class JwtTokenProvider {
   public static final String BEARER_TOKEN_PREFIX = "Bearer ";
   public static final String INVALID_JWT_MESSAGE = "Expired or Invalid JWT token.";
   public static final String CLAIMS_ROLE_KEY = "auth";
+  private final ILibraryAccountEngine libraryAccountEngine;
 
   @Value("${security.jwt.token.secret-key:secret-key}")
   private String secretKey;
 
   @Value("${security.jwt/token.expire-length:3600000}")
   private long validityInMilliseconds;
-
-  private ILibraryAccountEngine libraryAccountEngine;
 
   @Autowired
   public JwtTokenProvider(ILibraryAccountEngine libraryAccountEngine) {

@@ -33,11 +33,23 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.postgresql:postgresql:42.2.10'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'com.google.guava:guava:29.0-jre'
+	implementation 'com.tupilabs:human-name-parser:0.1'
+	implementation 'org.apache.commons:commons-csv:1.8'
+	implementation 'org.mockito:mockito-all:1.10.19'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	testImplementation 'com.h2database:h2:1.4.200'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	// JUnit
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
+	testCompile 'org.junit.jupiter:junit-jupiter-params'
+	testRuntime 'org.junit.jupiter:junit-jupiter-engine'
+	testCompile 'org.mockito:mockito-junit-jupiter'
+	test.useJUnitPlatform()
 }
 
 test {

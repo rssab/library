@@ -11,11 +11,14 @@ public class Checkout {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne private Copy copy;
+  @ManyToOne(optional = false)
+  private Copy copy;
 
-  @ManyToOne private LibraryAccount recipient;
+  @ManyToOne(optional = false)
+  private LibraryAccount recipient;
 
   @Temporal(TemporalType.TIMESTAMP)
+  @Column(nullable = false)
   private Date checkoutDate;
 
   @Temporal(TemporalType.TIMESTAMP)

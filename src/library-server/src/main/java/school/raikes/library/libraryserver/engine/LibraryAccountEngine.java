@@ -27,10 +27,10 @@ public class LibraryAccountEngine implements ILibraryAccountEngine {
       "User with provided NUID already exists.";
   private static final String NUID_NOT_FOUND_FAILURE_MESSAGE = "NUID not found.";
 
-  private ILibraryAccountAccessor libraryAccountAccessor;
-  private PasswordEncoder passwordEncoder;
-  private JwtTokenProvider jwtTokenProvider;
-  private AuthenticationManager authenticationManager;
+  private final ILibraryAccountAccessor libraryAccountAccessor;
+  private final PasswordEncoder passwordEncoder;
+  private final JwtTokenProvider jwtTokenProvider;
+  private final AuthenticationManager authenticationManager;
 
   @Autowired
   public LibraryAccountEngine(

@@ -10,8 +10,8 @@ public class WebApplicationException extends RuntimeException {
 
   private static final String DEFAULT_MESSAGE = "An error occurred.";
 
-  private HttpStatus status;
-  private String message;
+  private final HttpStatus status;
+  private final String message;
 
   public WebApplicationException(String message, HttpStatus status, Exception inner) {
     super(message, inner);
