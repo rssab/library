@@ -15,6 +15,7 @@ import { validateNuid, validatePin } from "../../common/validators";
 const CheckoutForm = props => {
   const [nuidValidationError, setNuidValidationError] = React.useState(false);
   const [pinValidationError, setPinValidationError] = React.useState(false);
+  const [barcodeValidationError, setBarcodeValidationError] = React.useState(false);
 
   const [nuid, setNuid] = React.useState();
   const [pin, setPin] = React.useState();
