@@ -21,8 +21,8 @@ public class LibraryAccountController extends ApiController {
   private static final String LIBRARY_ACCOUNT_RESOURCE_PATH = "/accounts";
   private static final String LOG_IN_PATH = "/login";
 
-  private ILibraryAccountEngine libraryAccountEngine;
-  private IRoleEngine roleEngine;
+  private final ILibraryAccountEngine libraryAccountEngine;
+  private final IRoleEngine roleEngine;
 
   @Autowired
   public LibraryAccountController(

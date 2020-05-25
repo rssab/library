@@ -22,7 +22,7 @@ import school.raikes.library.libraryserver.security.JwtTokenProvider;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private JwtTokenProvider jwtTokenProvider;
+  private final JwtTokenProvider jwtTokenProvider;
 
   @Autowired
   public WebSecurityConfig(@Lazy JwtTokenProvider jwtTokenProvider) {
