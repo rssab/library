@@ -2,7 +2,7 @@
  * Module for handling checkin/checkout actions from the system.
  */
 const CheckoutService = requestHandler => {
-  const checkoutWithAuth = barcode => {
+  const checkoutWithAuth = async barcode => {
     return {
       id: 123,
       book: {
@@ -17,13 +17,17 @@ const CheckoutService = requestHandler => {
           }
         ]
       },
-      recipient: {},
+      recipient: {
+        nuid: "11111111",
+        firstName: "Karl",
+        lastName: "Admin"
+      },
       checkoutDate: "2020/05/25",
       dueDate: "2020/06/08"
     };
   };
 
-  const checkoutWithoutAuth = (barcode, nuid, pin) => {
+  const checkoutWithoutAuth = async (barcode, nuid, pin) => {
     return {
       id: 123,
       book: {
@@ -38,13 +42,17 @@ const CheckoutService = requestHandler => {
           }
         ]
       },
-      recipient: {},
+      recipient: {
+        nuid: "11111111",
+        firstName: "Karl",
+        lastName: "Admin"
+      },
       checkoutDate: "2020/05/25",
       dueDate: "2020/06/08"
     };
   };
 
-  const getCheckout = id => {
+  const getCheckout = async id => {
     return {
       id: id,
       book: {
@@ -69,10 +77,15 @@ const CheckoutService = requestHandler => {
     };
   };
 
+  const getCheckoutDuration = async () => {
+    return "two weeks";
+  };
+
   return {
     checkoutWithAuth: checkoutWithAuth,
     checkoutWithoutAuth: checkoutWithoutAuth,
-    getCheckout: getCheckout
+    getCheckout: getCheckout,
+    getCheckoutDuration: getCheckoutDuration
   };
 };
 

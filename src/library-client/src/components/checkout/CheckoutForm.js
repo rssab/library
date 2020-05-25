@@ -15,7 +15,9 @@ import { validateNuid, validatePin } from "../../common/validators";
 const CheckoutForm = props => {
   const [nuidValidationError, setNuidValidationError] = React.useState(false);
   const [pinValidationError, setPinValidationError] = React.useState(false);
-  const [barcodeValidationError, setBarcodeValidationError] = React.useState(false);
+  const [barcodeValidationError, setBarcodeValidationError] = React.useState(
+    false
+  );
 
   const [nuid, setNuid] = React.useState();
   const [pin, setPin] = React.useState();
@@ -29,11 +31,13 @@ const CheckoutForm = props => {
       const validPin = validatePin(pin);
 
       if (validPin && validNuid) {
-        //TODO: Handle Checkout Action
+        props.checkoutWithoutAuthCallback(barcode, nuid, pin);
       } else {
         setNuidValidationError(!validNuid);
         setPinValidationError(!validPin);
       }
+    } else {
+      props.checkoutWithAuthCallback(barcode);
     }
   };
 
@@ -81,10 +85,11 @@ const CheckoutForm = props => {
   return (
     <div>
       <h1 className="display-4">Checkout</h1>
+      {props.error && <Alert color="danger">{props.error}</Alert>}
       <div className="pt-2">
         <p className="mx-0">
           Checkout a book by entering the information below. Books can be
-          checked out for <strong>two weeks</strong> at a time.
+          checked out for <strong>{props.checkoutPeriod}</strong> at a time.
         </p>
         <Form onSubmit={handleSubmit}>
           {renderLoginFields(props.loggedIn)}
