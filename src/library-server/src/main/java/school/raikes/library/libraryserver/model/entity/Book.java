@@ -1,7 +1,7 @@
 package school.raikes.library.libraryserver.model.entity;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"isbn"})})
 @Data
 public class Book {
-  @ManyToMany List<Tag> tags;
+  @ManyToMany Set<Tag> tags;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class Book {
   private String isbn;
 
   @OneToMany(mappedBy = "book", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private List<Copy> copies;
+  private Set<Copy> copies;
 
   @Column(nullable = false)
   private String title;
@@ -32,7 +32,8 @@ public class Book {
 
   @Column private String coverImageMimeType;
 
-  @ManyToMany private List<Author> authors;
+  @ManyToMany(fetch = FetchType.EAGER)
+  private Set<Author> authors;
 
   @Temporal(TemporalType.DATE)
   private Date publishDate;
