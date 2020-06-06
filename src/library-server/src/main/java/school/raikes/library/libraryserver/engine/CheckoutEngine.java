@@ -43,6 +43,11 @@ public class CheckoutEngine implements ICheckoutEngine {
   }
 
   @Override
+  public Duration getCheckoutDuration() {
+    return this.checkoutDuration;
+  }
+
+  @Override
   public Iterable<Checkout> findAll() {
     return this.checkoutAccessor.findAll();
   }

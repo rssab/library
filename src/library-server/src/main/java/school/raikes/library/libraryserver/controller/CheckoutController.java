@@ -1,5 +1,6 @@
 package school.raikes.library.libraryserver.controller;
 
+import java.time.Duration;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import school.raikes.library.libraryserver.engine.ICheckoutEngine;
 import school.raikes.library.libraryserver.exceptions.WebApplicationException;
+import school.raikes.library.libraryserver.model.dto.CheckoutDurationDto;
 import school.raikes.library.libraryserver.model.entity.Checkout;
 import school.raikes.library.libraryserver.utilities.AuthenticationUtilities;
 
@@ -28,6 +30,11 @@ public class CheckoutController extends ApiController {
   @Autowired
   public CheckoutController(ICheckoutEngine checkoutEngine) {
     this.checkoutEngine = checkoutEngine;
+  }
+
+  @GetMapping(CHECKOUT_DURATION_PATH)
+  public CheckoutDurationDto getCheckoutDuration() {
+    return new CheckoutDurationDto(this.checkoutEngine.getCheckoutDuration());
   }
 
   @GetMapping(CHECKOUT_PATH + "/{id}")
