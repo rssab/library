@@ -1,5 +1,6 @@
 package school.raikes.library.libraryserver.engine;
 
+import java.time.Duration;
 import java.util.Date;
 import java.util.Optional;
 import school.raikes.library.libraryserver.model.entity.Checkout;
@@ -8,6 +9,9 @@ import school.raikes.library.libraryserver.model.entity.LibraryAccount;
 
 /** Engine interface for managing {@link Checkout}s. */
 public interface ICheckoutEngine {
+
+  Duration getCheckoutDuration();
+
   Iterable<Checkout> findAll();
 
   Optional<Checkout> findById(Long id);

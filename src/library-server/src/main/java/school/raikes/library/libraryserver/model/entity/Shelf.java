@@ -1,8 +1,9 @@
 package school.raikes.library.libraryserver.model.entity;
 
-import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
@@ -16,6 +17,7 @@ public class Shelf {
   private int number;
 
   @OneToMany(mappedBy = "location")
+  @EqualsAndHashCode.Exclude
   @ToString.Exclude
-  private List<Copy> copies;
+  private Set<Copy> copies;
 }

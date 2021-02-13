@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import javax.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
-@Data
+@Data()
 public class Copy {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +17,7 @@ public class Copy {
   @ManyToOne
   @JoinColumn(name = "book_id", nullable = false)
   @JsonIgnore
+  @EqualsAndHashCode.Exclude
   @ToString.Exclude
   private Book book;
 

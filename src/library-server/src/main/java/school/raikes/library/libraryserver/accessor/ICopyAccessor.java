@@ -9,7 +9,7 @@ import school.raikes.library.libraryserver.model.entity.Copy;
 /** Accessor interface for {@link Copy}s */
 @Repository
 public interface ICopyAccessor extends CrudRepository<Copy, Long> {
-  Optional<Copy> findByBarcode(String barcode);
+  Optional<Copy> findByBarcode(long barcode);
 
   Iterable<Copy> findAllByBook(Book book);
 

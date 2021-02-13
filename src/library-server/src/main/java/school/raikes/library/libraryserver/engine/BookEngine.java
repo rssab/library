@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import school.raikes.library.libraryserver.accessor.IBookAccessor;
 import school.raikes.library.libraryserver.model.entity.Book;
+import school.raikes.library.libraryserver.model.entity.Copy;
 
 /** Basic implementation of the {@link IBookEngine} interface. */
 @Service
@@ -24,6 +25,11 @@ public class BookEngine implements IBookEngine {
   @Override
   public Optional<Book> findByIsbn(String isbn) {
     return this.bookAccessor.findByIsbn(isbn);
+  }
+
+  @Override
+  public Book findByCopy(Copy copy) {
+    return this.bookAccessor.findByCopiesContaining(copy);
   }
 
   @Override

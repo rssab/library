@@ -37,7 +37,8 @@ public class LibraryAccount implements UserDetails {
   public Collection<? extends GrantedAuthority> getAuthorities() {
     Set<GrantedAuthority> authorities = new HashSet<>();
 
-    authorities.add(new SimpleGrantedAuthority(role.getName()));
+    // Trim from default Spring Role Name 'ROLE_USER' -> 'USER'
+    authorities.add(new SimpleGrantedAuthority(role.getName().substring(5)));
 
     return authorities;
   }

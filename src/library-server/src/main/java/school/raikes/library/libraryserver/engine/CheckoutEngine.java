@@ -17,6 +17,7 @@ import school.raikes.library.libraryserver.exceptions.WebApplicationException;
 import school.raikes.library.libraryserver.model.entity.Checkout;
 import school.raikes.library.libraryserver.model.entity.Copy;
 import school.raikes.library.libraryserver.model.entity.LibraryAccount;
+import school.raikes.library.libraryserver.validators.BarcodeValidators;
 
 @Service
 @Slf4j
@@ -40,6 +41,11 @@ public class CheckoutEngine implements ICheckoutEngine {
     this.checkoutAccessor = checkoutAccessor;
     this.libraryAccountAccessor = libraryAccountAccessor;
     this.copyAccessor = copyAccessor;
+  }
+
+  @Override
+  public Duration getCheckoutDuration() {
+    return this.checkoutDuration;
   }
 
   @Override
@@ -101,7 +107,7 @@ public class CheckoutEngine implements ICheckoutEngine {
   public Checkout checkout(LibraryAccount libraryAccount, Copy copy) {
     if (isCheckedOut(copy)) {
       throw new WebApplicationException(
-          "You cannot check out a book that is already checked out.", HttpStatus.BAD_REQUEST);
+          "Item is already checked out", HttpStatus.BAD_REQUEST);
     }
 
     Checkout checkout = new Checkout();
@@ -133,7 +139,14 @@ public class CheckoutEngine implements ICheckoutEngine {
 
   @Override
   public Checkout checkout(String nuid, String barcode) {
-    Optional<Copy> copy = copyAccessor.findByBarcode(barcode);
+    int parsedBarcode;
+    try {
+      parsedBarcode = BarcodeValidators.validateCode39Barcode(barcode);
+    } catch (IllegalArgumentException iae) {
+      throw new WebApplicationException("Invalid Barcode provided", HttpStatus.BAD_REQUEST);
+    }
+
+    Optional<Copy> copy = copyAccessor.findByBarcode(parsedBarcode);
 
     if (!copy.isPresent()) {
       throw new WebApplicationException(

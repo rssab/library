@@ -36,7 +36,7 @@ public class CatalogCsvReaderTests {
         new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-14"), karlBook.getPublishDate());
 
     Assertions.assertEquals(1, karlBook.getCopies().size());
-    Copy karlBookCopy = karlBook.getCopies().get(0);
+    Copy karlBookCopy = karlBook.getCopies().iterator().next();
     Assertions.assertEquals(karlBook, karlBookCopy.getBook());
     Assertions.assertEquals(
         new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-15"), karlBookCopy.getAcquisitionDate());
@@ -44,13 +44,13 @@ public class CatalogCsvReaderTests {
     Assertions.assertEquals(1, karlBookCopy.getBarcode());
 
     Assertions.assertEquals(1, karlBook.getAuthors().size());
-    Author karlBookAuthor = karlBook.getAuthors().get(0);
+    Author karlBookAuthor = karlBook.getAuthors().iterator().next();
     Assertions.assertEquals("Karl", karlBookAuthor.getFirstName());
     Assertions.assertEquals("Shaffer", karlBookAuthor.getLastName());
     Assertions.assertNull(karlBookAuthor.getMiddleName());
 
     Assertions.assertEquals(1, karlBook.getTags().size());
-    Assertions.assertEquals("MANUAL", karlBook.getTags().get(0).getName());
+    Assertions.assertEquals("MANUAL", karlBook.getTags().iterator().next().getName());
 
     // Check to verify multiple editions are separate books.
     long mattVavBookCount =
@@ -95,10 +95,10 @@ public class CatalogCsvReaderTests {
 
     Book b = new Book();
     b.setIsbn("123456789");
-    b.setTags(new ArrayList<>());
+    b.setTags(new HashSet<>());
 
     Copy c = new Copy();
-    List<Copy> copies = new ArrayList<>();
+    Set<Copy> copies = new HashSet<>();
     copies.add(c);
     b.setCopies(copies);
 
@@ -141,7 +141,7 @@ public class CatalogCsvReaderTests {
     Book expectedBook = new Book();
     expectedBook.setIsbn("123456789");
     expectedBook.setCopies(copies);
-    expectedBook.setTags(new ArrayList<>());
+    expectedBook.setTags(new HashSet<>());
     Assertions.assertEquals(expectedBook, bookMap.get("123456789"));
   }
 

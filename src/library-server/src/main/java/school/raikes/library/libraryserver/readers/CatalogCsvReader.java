@@ -179,7 +179,7 @@ public class CatalogCsvReader {
       }
 
       // Using parsed values, create or update the requisite entities
-      List<Author> authorEntities = new ArrayList<>();
+      Set<Author> authorEntities = new HashSet<>();
       for (String[] author : parsedAuthors) {
         String authorKey = String.join("", author);
         Author a = authorMap.get(authorKey);
@@ -220,8 +220,8 @@ public class CatalogCsvReader {
         b.setTitle(title);
         b.setSubtitle(parsedSubtitle);
         b.setEdition(parsedEdition);
-        b.setCopies(new ArrayList<>());
-        b.setTags(new ArrayList<>());
+        b.setCopies(new HashSet<>());
+        b.setTags(new HashSet<>());
         b.setAuthors(authorEntities);
         b.setPublishDate(parsedPublishDate);
 
