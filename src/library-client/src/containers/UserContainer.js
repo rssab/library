@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { UserProvider } from "../context/UserContext";
-import { AuthApiAccessor } from "../data/AuthApiAccessor";
-import ApiRequestHandler from "../data/ApiRequestHandler";
+import { AuthService } from "../data/AuthService";
+import RequestHandler from "../data/RequestHandler";
 import jwtDecode from "jwt-decode";
 
 const UserContainer = props => {
@@ -9,16 +9,16 @@ const UserContainer = props => {
   const [errors, setErrors] = useState([]);
   const [user, setUser] = useState(null);
 
-  const apiRequestHandler = ApiRequestHandler();
-  const authApiAccessor = AuthApiAccessor(apiRequestHandler);
+  const requestHandler = RequestHandler();
+  const authService = AuthService(requestHandler);
 
   const handleUserLogin = (nuid, pin) => {
-    authApiAccessor
+    authService
       .login(nuid, pin)
       .then(result => {
         setToken(result.token);
         setUser(jwtDecode(result.token));
-        apiRequestHandler.setBearerToken(result.token);
+        requestHandler.setBearerToken(result.token);
         setErrors([]);
       })
       .catch(err => {
@@ -29,7 +29,11 @@ const UserContainer = props => {
   const handleUserLogout = () => {
     setUser(null);
     setToken(null);
-    apiRequestHandler.clearBearerToken();
+    requestHandler.clearBearerToken();
+  };
+
+  const isLoggedIn = () => {
+    return (user !== null) & (token !== null);
   };
 
   return (
@@ -41,7 +45,9 @@ const UserContainer = props => {
           user: user
         },
         handleUserLogin: handleUserLogin,
-        handleUserLogout: handleUserLogout
+        handleUserLogout: handleUserLogout,
+        isLoggedIn: isLoggedIn,
+        requestHandler: requestHandler
       }}
     >
       {props.children}

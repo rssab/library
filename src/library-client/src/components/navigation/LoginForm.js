@@ -52,7 +52,7 @@ const LoginForm = props => {
           <Input
             type="text"
             name="nuid"
-            id="nuid"
+            id="login-nuid"
             onChange={e => {
               setNuid(e.target.value);
             }}
@@ -63,11 +63,11 @@ const LoginForm = props => {
           </FormFeedback>
         </FormGroup>
         <FormGroup row>
-          <Label for={"pin"}>PIN</Label>
+          <Label for="pin">PIN</Label>
           <Input
             type="password"
             name="pin"
-            id="pin"
+            id="login-pin"
             onChange={e => {
               setPin(e.target.value);
             }}
