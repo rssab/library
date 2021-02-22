@@ -1,12 +1,10 @@
 package school.raikes.library.libraryserver.controller;
 
-import java.time.Duration;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import school.raikes.library.libraryserver.engine.ICheckoutEngine;
 import school.raikes.library.libraryserver.engine.ILibraryAccountEngine;
@@ -30,7 +28,8 @@ public class CheckoutController extends ApiController {
   private final ILibraryAccountEngine libraryAccountEngine;
 
   @Autowired
-  public CheckoutController(ICheckoutEngine checkoutEngine, ILibraryAccountEngine libraryAccountEngine) {
+  public CheckoutController(
+      ICheckoutEngine checkoutEngine, ILibraryAccountEngine libraryAccountEngine) {
     this.checkoutEngine = checkoutEngine;
     this.libraryAccountEngine = libraryAccountEngine;
   }
@@ -64,12 +63,15 @@ public class CheckoutController extends ApiController {
   public Checkout checkout(Authentication authentication, @RequestBody CheckoutDto checkoutDto) {
     if (authentication == null) {
       if (checkoutDto.getNuid() == null || checkoutDto.getPin() == null) {
-        throw new WebApplicationException("You must be logged in or provide credentials to checkout an item", HttpStatus.BAD_REQUEST);
+        throw new WebApplicationException(
+            "You must be logged in or provide credentials to checkout an item",
+            HttpStatus.BAD_REQUEST);
       }
     }
 
     if (checkoutDto.getBarcode() == null) {
-      throw new WebApplicationException("You must provide a barcode for an item to checkout.", HttpStatus.BAD_REQUEST);
+      throw new WebApplicationException(
+          "You must provide a barcode for an item to checkout.", HttpStatus.BAD_REQUEST);
     }
 
     String authNuid = AuthenticationUtilities.getNuid(authentication);
@@ -78,8 +80,11 @@ public class CheckoutController extends ApiController {
     String barcode = checkoutDto.getBarcode();
 
     // Allow only administrators to check out for another user.
-    if (authNuid != null && !authNuid.equals(checkoutNuid) && !AuthenticationUtilities.hasAdminAuthority(authentication)) {
-      throw new WebApplicationException("You cannot checkout an item for another user.", HttpStatus.FORBIDDEN);
+    if (authNuid != null
+        && !authNuid.equals(checkoutNuid)
+        && !AuthenticationUtilities.hasAdminAuthority(authentication)) {
+      throw new WebApplicationException(
+          "You cannot checkout an item for another user.", HttpStatus.FORBIDDEN);
     }
 
     if (authentication == null) {

@@ -1,7 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.2.4.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-	id "com.diffplug.gradle.spotless" version "3.27.2"
+	id "com.diffplug.spotless" version "5.10.1"
 	id "io.freefair.lombok" version "5.0.0-rc4"
 	id 'java'
 }
@@ -15,10 +15,6 @@ configurations {
 	runtimeClasspath {
 		extendsFrom developmentOnly
 	}
-}
-
-repositories {
-	mavenCentral()
 }
 
 spotless {
@@ -55,3 +51,11 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+	
+task copyBuiltClientToServerResources(type: Copy) {
+	dependsOn ':library-client:npmBuild'
+	from project(":library-client").file("build");
+	into file("build/resources/main/static/")
+}
+
+compileJava.dependsOn copyBuiltClientToServerResources

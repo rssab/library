@@ -106,8 +106,7 @@ public class CheckoutEngine implements ICheckoutEngine {
   @Override
   public Checkout checkout(LibraryAccount libraryAccount, Copy copy) {
     if (isCheckedOut(copy)) {
-      throw new WebApplicationException(
-          "Item is already checked out", HttpStatus.BAD_REQUEST);
+      throw new WebApplicationException("Item is already checked out", HttpStatus.BAD_REQUEST);
     }
 
     Checkout checkout = new Checkout();

@@ -1,9 +1,8 @@
 package school.raikes.library.libraryserver.model.dto;
 
+import java.time.Duration;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.time.Duration;
 
 @Data
 @AllArgsConstructor

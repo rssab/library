@@ -1,0 +1,20 @@
+plugins {
+    id 'base'
+    id 'com.github.node-gradle.node' version '3.0.1'
+}
+
+
+task npmBuild(type: NpmTask) {
+  dependsOn npmInstall  
+  description = "Builds production version of the webapp"
+  workingDir = file("${project.projectDir}/src")
+  args = ["run", "build"]
+}
+
+npmInstall.onlyIf {
+  System.env['CI'] == null
+}
+
+npmBuild.onlyIf {
+  System.env['CI'] == null
+}
